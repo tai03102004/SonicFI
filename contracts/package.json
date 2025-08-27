@@ -1,0 +1,50 @@
+{
+  "name": "socialfi-contracts",
+  "version": "1.0.0",
+  "description": "SocialFi Platform Smart Contracts",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:coverage": "hardhat coverage",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:sonic": "hardhat run scripts/deploy.js --network sonic",
+    "deploy:sonic-testnet": "hardhat run scripts/deploy.js --network sonicTestnet",
+    "verify": "hardhat verify --network sonic",
+    "node": "hardhat node",
+    "clean": "hardhat clean",
+    "size": "hardhat size-contracts",
+    "flatten": "hardhat flatten",
+    "gas-report": "REPORT_GAS=true hardhat test"
+  },
+  "keywords": [
+    "socialfi",
+    "defi",
+    "ai",
+    "blockchain",
+    "ethereum"
+  ],
+  "author": "SocialFi Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "@openzeppelin/hardhat-upgrades": "^3.0.0",
+    "@typechain/ethers-v6": "^0.5.0",
+    "@typechain/hardhat": "^9.0.0",
+    "hardhat": "^2.19.0",
+    "hardhat-contract-sizer": "^2.10.0",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solidity-coverage": "^0.8.5",
+    "typechain": "^8.3.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.4.0",
+    "@openzeppelin/contracts-upgradeable": "^5.0.0",
+    "dotenv": "^16.3.0",
+    "ethers": "^6.8.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

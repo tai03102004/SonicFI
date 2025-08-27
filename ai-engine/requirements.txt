@@ -1,0 +1,97 @@
+# Core data science libraries
+numpy==1.24.3
+pandas==2.0.3
+scipy==1.11.1
+
+# Async libraries
+asyncio
+aiohttp==3.8.5
+aiofiles==23.1.0
+
+# Machine Learning and NLP
+scikit-learn==1.3.0
+torch==2.0.1
+torchvision==0.15.2
+transformers==4.33.2
+sentence-transformers==2.2.2
+spacy==3.6.1
+nltk==3.8.1
+textblob==0.17.1
+
+# Sentiment Analysis
+vaderSentiment==3.3.2
+
+# Financial data
+yfinance==0.2.20
+pandas-datareader==0.10.0
+
+# Social media APIs
+tweepy==4.14.0
+praw==7.7.1
+
+# OpenAI
+openai==1.3.0
+
+# Web3 and blockchain
+web3==6.9.0
+eth-account==0.9.0
+
+# Additional ML libraries
+xgboost==1.7.6
+lightgbm==4.0.0
+catboost==1.2.2
+
+# Data visualization (optional but useful)
+matplotlib==3.7.2
+seaborn==0.12.2
+plotly==5.15.0
+
+# Utility libraries
+python-dotenv==1.0.0
+requests==2.31.0
+beautifulsoup4==4.12.2
+lxml==4.9.3
+
+# Caching and database
+redis==4.6.0
+psycopg2-binary==2.9.7
+
+# Development and testing
+pytest==7.4.0
+jupyter==1.0.0
+ipykernel==6.25.0
+
+# Time series analysis
+statsmodels==0.14.0
+prophet==1.1.4
+
+# Image processing (if needed for charts)
+Pillow==10.0.0
+
+# Progress bars and logging
+tqdm==4.65.0
+loguru==0.7.0
+
+# Configuration and environment
+pyyaml==6.0.1
+configparser==5.3.0
+
+# API rate limiting
+ratelimit==2.2.1
+
+# Crypto-specific libraries
+ccxt==4.0.77
+python-binance==1.0.19
+
+# Text processing
+regex==2023.6.3
+emoji==2.7.0
+langdetect==1.0.9
+
+# Clustering and similarity
+faiss-cpu==1.7.4
+umap-learn==0.5.3
+
+# HTTP client with retry
+httpx==0.24.1
+tenacity==8.2.3

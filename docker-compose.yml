@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: socialfi_db
+      POSTGRES_USER: socialfi_user
+      POSTGRES_PASSWORD: socialfi_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=postgresql://socialfi_user:socialfi_password@postgres:5432/socialfi_db
+      - REDIS_URL=redis://redis:6379
+      - SONIC_RPC_URL=https://rpc.sonic.network
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - NEWSAPI_KEY=${NEWSAPI_KEY}
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  # AI Engine
+  ai-engine:
+    build:
+      context: ./ai-engine
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - NEWSAPI_KEY=${NEWSAPI_KEY}
+      - SONIC_RPC_URL=https://rpc.sonic.network
+      - DATABASE_URL=postgresql://socialfi_user:socialfi_password@postgres:5432/socialfi_db
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./ai-engine:/app
+
+  # Frontend (for development)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:3001
+      - REACT_APP_AI_API_URL=http://localhost:8001
+      - REACT_APP_SONIC_RPC_URL=https://rpc.sonic.network
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  # Nginx (for production)
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/build:/usr/share/nginx/html
+    depends_on:
+      - frontend
+      - backend
+    profiles:
+      - production
+
+volumes:
+  postgres_data:
+  redis_data:

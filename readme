@@ -1,0 +1,124 @@
+# AI SocialFi - Decentralized Knowledge DAO
+
+A revolutionary SocialFi platform where AI generates crypto research content and users stake tokens to vote on AI-generated insights, creating a decentralized knowledge curation system.
+
+## 🎯 Vision
+Transform traditional crypto research by leveraging AI to democratize market analysis while incentivizing community-driven content curation through blockchain rewards.
+
+## 🚀 Key Features
+
+### AI Research Engine
+- **Multi-source Aggregation**: Scrapes news from CoinDesk, CryptoSlate, Twitter, Reddit
+- **NLP Analysis**: Sentiment analysis, trend detection, market correlation
+- **Automated Reports**: Daily/weekly research on BTC, ETH, Sonic, and trending tokens
+- **Real-time Alerts**: Breaking news summarization and impact analysis
+
+### Decentralized Governance
+- **Stake-to-Vote**: Users stake S tokens to vote on AI content quality
+- **Reputation System**: Consistent good voters earn higher rewards
+- **Content Curation**: Community filters signal from noise
+- **Expert Validation**: Top performers can challenge AI conclusions
+
+### Sonic Blockchain Integration
+- **Low-cost Transactions**: Efficient voting and reward distribution
+- **Immutable Records**: All AI content and votes stored on-chain
+- **Smart Rewards**: Automatic distribution based on voting accuracy
+- **Cross-chain Bridge**: Support for major crypto assets
+
+## 🏗️ Architecture
+
+```
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   Backend API    │    │   AI Engine     │
+│   (React)       │◄──►│   (Node.js)      │◄──►│   (Python)      │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+         │                       │                       │
+         ▼                       ▼                       ▼
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│ Sonic Blockchain│    │   PostgreSQL     │    │ External APIs   │
+│ (Smart Contracts│    │   Database       │    │ (News Sources)  │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+```
+
+## 💡 Innovation Points
+
+1. **AI as Decentralized Analyst**: First platform to replace traditional research firms with community-curated AI
+2. **Economic Incentives**: Align community interests with content quality through tokenomics
+3. **Real-time Market Intelligence**: 24/7 AI monitoring beats human analysts in speed and consistency
+4. **Democratic Research**: Break down barriers to high-quality crypto analysis
+
+## 🎯 Target Users
+
+- **Retail Traders**: Access institutional-grade research without high fees
+- **DeFi Protocols**: Data-driven decision making for treasury management
+- **Crypto Funds**: Automated screening and due diligence
+- **Content Creators**: Monetize expertise through validation rewards
+
+## 🏆 Competitive Advantages
+
+1. **Speed**: AI generates reports in minutes vs days for human analysts
+2. **Cost**: Community curation costs fraction of traditional research
+3. **Objectivity**: Reduced bias through algorithmic analysis
+4. **Accessibility**: Global, permissionless access to quality insights
+
+## 🛠️ Tech Stack
+
+- **Blockchain**: Sonic (EVM-compatible)
+- **Smart Contracts**: Solidity
+- **AI/ML**: Python, Transformers, NLTK
+- **Backend**: Node.js, Express
+- **Frontend**: React, Web3.js
+- **Database**: PostgreSQL, Redis
+- **Infrastructure**: Docker, AWS
+
+## 📈 Tokenomics
+
+- **S Token**: Governance and staking token
+- **Staking Rewards**: 5-15% APY based on voting accuracy
+- **Content Rewards**: AI content creators (validators) earn tokens
+- **Burn Mechanism**: Poor quality content votes burn tokens
+
+## 🚀 Getting Started
+
+```bash
+# Clone repository
+git clone <repository-url>
+cd SocialFi
+
+# Install dependencies
+npm install
+cd ai-engine && pip install -r requirements.txt
+
+# Start development environment
+docker-compose up -d
+npm run dev
+```
+
+## 📋 Development Phases
+
+### Phase 1: MVP (4 weeks)
+- [ ] Basic AI news summarization
+- [ ] Simple voting mechanism
+- [ ] Sonic testnet deployment
+
+### Phase 2: Enhancement (6 weeks)
+- [ ] Advanced NLP features
+- [ ] Reputation system
+- [ ] Mobile app
+
+### Phase 3: Scale (8 weeks)
+- [ ] Multi-chain support
+- [ ] API for third-party integration
+- [ ] Advanced trading signals
+
+## 🏅 Hackathon Differentiators
+
+1. **Real AI Implementation**: Not just buzzwords - actual NLP processing
+2. **Complete Ecosystem**: End-to-end solution from data to rewards
+3. **Sonic Integration**: Leverages sponsor blockchain effectively
+4. **Market Ready**: Solves real problems in crypto research space
+5. **Scalable Design**: Architecture supports millions of users
+
+## 📞 Contact
+
+Built for [Hackathon Name] by [Your Team]

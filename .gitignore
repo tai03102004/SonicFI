@@ -1,0 +1,38 @@
+# Global node_modules
+node_modules/
+**/node_modules/
+
+# Build outputs
+.next/
+**/.next/
+build/
+**/build/
+out/
+**/out/
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Vercel, coverage, debug logs
+.vercel/
+coverage/
+*.log
+*.tsbuildinfo
+*.pem
+.DS_Store
+
+# Python configs
+ai-engine/venv
+ai-engine/.env
+
+# backend
+backend/node_modules
+
+#contracts
+contracts/node_modules
+contracts/.env
+
+#fe
+frontend/node_modules
