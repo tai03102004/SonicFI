@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { ethers } from 'ethers';
+import { parseEther } from 'ethers';
 
 interface AIModel {
   id: number;
@@ -149,7 +149,7 @@ const AIModelMarketplace: React.FC = () => {
           modelHash,
           categories: newModelForm.categories,
           isPublic: newModelForm.isPublic,
-          stakingRequirement: ethers.utils.parseEther(newModelForm.stakingRequirement).toString(),
+          stakingRequirement: parseEther(newModelForm.stakingRequirement).toString(),
           userAddress: connectedAccount
         }),
       });
@@ -185,7 +185,7 @@ const AIModelMarketplace: React.FC = () => {
         },
         body: JSON.stringify({
           modelId,
-          amount: ethers.utils.parseEther(amount).toString(),
+          amount: parseEther(amount).toString(),
           userAddress: connectedAccount
         }),
       });

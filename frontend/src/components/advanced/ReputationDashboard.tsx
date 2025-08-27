@@ -360,7 +360,7 @@ const ReputationDashboard: React.FC = () => {
             <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px' }}>
               Recent Activities
             </h3>
-            <div style={{ space: '10px' }}>
+            <div>
               {userReputation.recentActivities.slice(0, 10).map((activity, index) => (
                 <div key={index} style={{
                   display: 'flex',

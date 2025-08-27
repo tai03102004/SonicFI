@@ -1,198 +1,104 @@
-import React, { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
+import React, { useState, useCallback } from 'react';
 
 interface AIContent {
   id: number;
   contentHash: string;
-  aiAgent: string;
   timestamp: number;
   totalStaked: number;
   positiveVotes: number;
   negativeVotes: number;
   finalized: boolean;
-  rewardPool: number;
 }
 
-interface ResearchReport {
-  executive_summary: string;
-  key_findings: Record<string, any>;
-  market_sentiment: any;
-  price_predictions: Record<string, any>;
-  risk_assessment: string;
-  trading_recommendations: string[];
-  confidence: number;
-  detailed_analysis: {
-    news_sentiment: any;
-    social_sentiment: any;
-    technical_analysis: any;
-    onchain_metrics: any;
-    market_signals: any[];
-  };
-}
+const mockContents: AIContent[] = [
+  {
+    id: 1,
+    contentHash: 'QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG',
+    timestamp: Math.floor(Date.now() / 1000) - 3600,
+    totalStaked: 250,
+    positiveVotes: 180,
+    negativeVotes: 70,
+    finalized: false
+  },
+  {
+    id: 2,
+    contentHash: 'QmAbCdEfGhIjKlMnOpQrStUvWxYz1234567890AbCdEf',
+    timestamp: Math.floor(Date.now() / 1000) - 7200,
+    totalStaked: 150,
+    positiveVotes: 90,
+    negativeVotes: 60,
+    finalized: true
+  }
+];
 
 const SimpleResearchDashboard: React.FC = () => {
-  const [contents, setContents] = useState<AIContent[]>([]);
-  const [selectedContent, setSelectedContent] = useState<AIContent | null>(null);
-  const [researchReport, setResearchReport] = useState<ResearchReport | null>(null);
-  const [userStats, setUserStats] = useState({
-    totalStaked: 0,
-    accuracyScore: 0,
-    totalRewards: 0,
-    votingPower: 0
-  });
-  const [loading, setLoading] = useState(false);
+  const [contents] = useState<AIContent[]>(mockContents);
+  const [selectedContent, setSelectedContent] = useState<AIContent | null>(contents[0]);
   const [stakeAmount, setStakeAmount] = useState('');
-  const [connectedAccount, setConnectedAccount] = useState<string>('');
 
-  useEffect(() => {
-    fetchContents();
-    fetchUserStats();
-    connectWallet();
+  const formatTokenAmount = useCallback((amount: number) => {
+    return amount.toFixed(2);
   }, []);
 
-  const connectWallet = async () => {
-    if (typeof window.ethereum !== 'undefined') {
-      try {
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        setConnectedAccount(accounts[0]);
-      } catch (error) {
-        console.error('Error connecting wallet:', error);
-      }
-    }
-  };
+  const getVotingProgress = useCallback((content: AIContent) => {
+    const total = content.positiveVotes + content.negativeVotes;
+    return total > 0 ? (content.positiveVotes / total) * 100 : 50;
+  }, []);
 
-  const fetchContents = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/contents');
-      const data = await response.json();
-      setContents(data);
-    } catch (error) {
-      console.error('Error fetching contents:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchUserStats = async () => {
-    try {
-      const response = await fetch(`/api/user-stats?address=${connectedAccount}`);
-      const data = await response.json();
-      setUserStats(data);
-    } catch (error) {
-      console.error('Error fetching user stats:', error);
-    }
-  };
-
-  const fetchResearchReport = async (contentHash: string) => {
-    try {
-      const response = await fetch(`/api/research/${contentHash}`);
-      const data = await response.json();
-      setResearchReport(data);
-    } catch (error) {
-      console.error('Error fetching research report:', error);
-    }
-  };
-
-  const handleVote = async (contentId: number, positive: boolean) => {
+  const handleVote = useCallback((_contentId: number, positive: boolean) => {
     if (!stakeAmount || parseFloat(stakeAmount) < 100) {
       alert('Minimum stake amount is 100 S tokens');
       return;
     }
-
-    try {
-      setLoading(true);
-      
-      const response = await fetch('/api/vote', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contentId,
-          amount: stakeAmount,
-          positive,
-          userAddress: connectedAccount
-        }),
-      });
-      
-      if (response.ok) {
-        alert('Vote submitted successfully!');
-        fetchContents();
-        fetchUserStats();
-        setStakeAmount('');
-      }
-    } catch (error) {
-      console.error('Error voting:', error);
-      alert('Error submitting vote');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const formatTokenAmount = (amount: number) => {
-    return (amount / 1e18).toFixed(2);
-  };
-
-  const getVotingProgress = (content: AIContent) => {
-    const total = content.positiveVotes + content.negativeVotes;
-    return total > 0 ? (content.positiveVotes / total) * 100 : 50;
-  };
+    alert(`Vote ${positive ? 'approved' : 'rejected'} with ${stakeAmount} S tokens!`);
+    setStakeAmount('');
+  }, [stakeAmount]);
 
   return (
-    <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
-      {/* Header */}
-      <div style={{ marginBottom: '30px', borderBottom: '2px solid #e5e5e5', paddingBottom: '20px' }}>
+    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
+      <div style={{ marginBottom: '30px', textAlign: 'center' }}>
         <h1 style={{ fontSize: '32px', fontWeight: 'bold', margin: '0 0 10px 0', color: '#1a1a1a' }}>
-          AI SocialFi Research Platform
+          AI Research Platform
         </h1>
         <p style={{ fontSize: '16px', color: '#666', margin: 0 }}>
           Decentralized knowledge curation powered by community and AI
         </p>
-        {connectedAccount && (
-          <p style={{ fontSize: '14px', color: '#888', marginTop: '10px' }}>
-            Connected: {connectedAccount.slice(0, 6)}...{connectedAccount.slice(-4)}
-          </p>
-        )}
       </div>
 
-      {/* User Stats */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginBottom: '30px' }}>
-        <div style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '20px', backgroundColor: '#f9f9f9' }}>
-          <h3 style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#666', textTransform: 'uppercase' }}>Total Staked</h3>
-          <p style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: '#2563eb' }}>
-            {formatTokenAmount(userStats.totalStaked)} S
-          </p>
-        </div>
-        
-        <div style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '20px', backgroundColor: '#f9f9f9' }}>
-          <h3 style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#666', textTransform: 'uppercase' }}>Accuracy Score</h3>
-          <p style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: '#dc2626' }}>
-            {userStats.accuracyScore}
-          </p>
-        </div>
-        
-        <div style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '20px', backgroundColor: '#f9f9f9' }}>
-          <h3 style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#666', textTransform: 'uppercase' }}>Total Rewards</h3>
-          <p style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: '#059669' }}>
-            {formatTokenAmount(userStats.totalRewards)} S
-          </p>
-        </div>
-        
-        <div style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '20px', backgroundColor: '#f9f9f9' }}>
-          <h3 style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#666', textTransform: 'uppercase' }}>Voting Power</h3>
-          <p style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: '#7c3aed' }}>
-            {formatTokenAmount(userStats.votingPower)}
-          </p>
-        </div>
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+        gap: '20px', 
+        marginBottom: '30px' 
+      }}>
+        {[
+          { label: 'Total Staked', value: '500.00 S', color: '#2563eb' },
+          { label: 'Accuracy Score', value: '85', color: '#dc2626' },
+          { label: 'Total Rewards', value: '120.00 S', color: '#059669' },
+          { label: 'Voting Power', value: '1500', color: '#7c3aed' }
+        ].map((stat, index) => (
+          <div key={index} style={{ 
+            border: '1px solid #ddd', 
+            borderRadius: '8px', 
+            padding: '20px', 
+            backgroundColor: '#fff',
+            textAlign: 'center'
+          }}>
+            <h3 style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#666', textTransform: 'uppercase' }}>
+              {stat.label}
+            </h3>
+            <p style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: stat.color }}>
+              {stat.value}
+            </p>
+          </div>
+        ))}
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '30px' }}>
-        {/* Content List */}
         <div>
-          <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px' }}>Latest AI Research Reports</h2>
-          
-          {loading && <p>Loading...</p>}
+          <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px' }}>
+            Latest AI Research Reports
+          </h2>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
             {contents.map((content) => (
@@ -205,12 +111,9 @@ const SimpleResearchDashboard: React.FC = () => {
                   cursor: 'pointer',
                   backgroundColor: selectedContent?.id === content.id ? '#eff6ff' : '#fff'
                 }}
-                onClick={() => {
-                  setSelectedContent(content);
-                  fetchResearchReport(content.contentHash);
-                }}
+                onClick={() => setSelectedContent(content)}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '15px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
                   <div>
                     <h3 style={{ margin: '0 0 5px 0', fontSize: '18px', fontWeight: 'bold' }}>
                       Research Report #{content.id}
@@ -231,7 +134,6 @@ const SimpleResearchDashboard: React.FC = () => {
                   </span>
                 </div>
 
-                {/* Voting Progress */}
                 <div style={{ marginBottom: '15px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', color: '#666', marginBottom: '5px' }}>
                     <span>Community Sentiment</span>
@@ -247,7 +149,8 @@ const SimpleResearchDashboard: React.FC = () => {
                     <div style={{
                       width: `${getVotingProgress(content)}%`,
                       height: '100%',
-                      backgroundColor: getVotingProgress(content) > 50 ? '#10b981' : '#ef4444'
+                      backgroundColor: getVotingProgress(content) > 50 ? '#10b981' : '#ef4444',
+                      transition: 'width 0.3s ease'
                     }} />
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#888', marginTop: '2px' }}>
@@ -313,21 +216,20 @@ const SimpleResearchDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Research Details */}
         <div>
-          <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px' }}>Research Details</h2>
+          <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px' }}>
+            Research Details
+          </h2>
           
-          {selectedContent && researchReport ? (
+          {selectedContent ? (
             <div style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '20px', backgroundColor: '#fff' }}>
-              {/* Executive Summary */}
               <div style={{ marginBottom: '20px' }}>
                 <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Executive Summary</h4>
                 <p style={{ fontSize: '14px', lineHeight: 1.5, color: '#333' }}>
-                  {researchReport.executive_summary}
+                  Current market analysis shows mixed signals with Bitcoin showing consolidation patterns while Ethereum demonstrates stronger momentum. Sonic blockchain integration provides positive outlook for DeFi adoption.
                 </p>
               </div>
 
-              {/* Confidence Score */}
               <div style={{ marginBottom: '20px' }}>
                 <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Confidence Score</h4>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -339,96 +241,57 @@ const SimpleResearchDashboard: React.FC = () => {
                     overflow: 'hidden'
                   }}>
                     <div style={{
-                      width: `${researchReport.confidence * 100}%`,
+                      width: '78%',
                       height: '100%',
-                      backgroundColor: researchReport.confidence >= 0.8 ? '#10b981' : 
-                                     researchReport.confidence >= 0.6 ? '#f59e0b' : '#ef4444'
+                      backgroundColor: '#f59e0b',
+                      transition: 'width 0.3s ease'
                     }} />
                   </div>
                   <span style={{
                     fontSize: '14px',
                     fontWeight: 'bold',
-                    color: researchReport.confidence >= 0.8 ? '#10b981' : 
-                           researchReport.confidence >= 0.6 ? '#f59e0b' : '#ef4444'
+                    color: '#f59e0b'
                   }}>
-                    {(researchReport.confidence * 100).toFixed(0)}%
+                    78%
                   </span>
                 </div>
               </div>
 
-              {/* Price Predictions */}
-              {researchReport.price_predictions && (
-                <div style={{ marginBottom: '20px' }}>
-                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Price Predictions</h4>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {Object.entries(researchReport.price_predictions).map(([token, prediction]: [string, any]) => (
-                      <div key={token} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: '14px', fontWeight: 'bold' }}>{token}</span>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                          <span style={{ fontSize: '20px' }}>
-                            {prediction.trend === 'up' ? '📈' : '📉'}
-                          </span>
-                          <span style={{
-                            fontSize: '14px',
-                            fontWeight: 'bold',
-                            color: prediction.change_7d > 0 ? '#10b981' : '#ef4444'
-                          }}>
-                            {prediction.change_7d > 0 ? '+' : ''}{prediction.change_7d}%
-                          </span>
-                        </div>
+              <div style={{ marginBottom: '20px' }}>
+                <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Price Predictions</h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {[
+                    { token: 'BTC', trend: 'up', change: 5.2 },
+                    { token: 'ETH', trend: 'up', change: 8.1 },
+                    { token: 'SONIC', trend: 'up', change: 12.4 }
+                  ].map((prediction) => (
+                    <div key={prediction.token} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '14px', fontWeight: 'bold' }}>{prediction.token}</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                        <span style={{ fontSize: '20px' }}>
+                          {prediction.trend === 'up' ? '📈' : '📉'}
+                        </span>
+                        <span style={{
+                          fontSize: '14px',
+                          fontWeight: 'bold',
+                          color: prediction.change > 0 ? '#10b981' : '#ef4444'
+                        }}>
+                          +{prediction.change}%
+                        </span>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Key Findings */}
-              {researchReport.key_findings && (
-                <div style={{ marginBottom: '20px' }}>
-                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Key Findings</h4>
-                  {Object.entries(researchReport.key_findings).map(([token, findings]: [string, any]) => (
-                    <div key={token} style={{ marginBottom: '10px' }}>
-                      <h5 style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '5px' }}>{token}</h5>
-                      <p style={{ fontSize: '13px', color: '#666', lineHeight: 1.4 }}>
-                        {typeof findings === 'string' ? findings : JSON.stringify(findings)}
-                      </p>
                     </div>
                   ))}
                 </div>
-              )}
-
-              {/* Risk Assessment */}
-              <div style={{ marginBottom: '20px' }}>
-                <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Risk Assessment</h4>
-                <p style={{ fontSize: '14px', lineHeight: 1.5, color: '#333' }}>
-                  {researchReport.risk_assessment}
-                </p>
               </div>
 
-              {/* Trading Recommendations */}
-              {researchReport.trading_recommendations && (
-                <div style={{ marginBottom: '20px' }}>
-                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Trading Recommendations</h4>
-                  <ul style={{ fontSize: '14px', lineHeight: 1.5, color: '#333', paddingLeft: '20px' }}>
-                    {researchReport.trading_recommendations.map((rec, index) => (
-                      <li key={index} style={{ marginBottom: '5px' }}>{rec}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Detailed Analysis Preview */}
-              {researchReport.detailed_analysis && (
-                <div>
-                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Analysis Summary</h4>
-                  <div style={{ fontSize: '13px', color: '#666' }}>
-                    <p>• News Articles Analyzed: {researchReport.detailed_analysis.news_sentiment?.article_count || 0}</p>
-                    <p>• Social Media Posts: {researchReport.detailed_analysis.social_sentiment?.total_volume || 0}</p>
-                    <p>• Market Signals: {researchReport.detailed_analysis.market_signals?.length || 0}</p>
-                    <p>• Technical Indicators: {Object.keys(researchReport.detailed_analysis.technical_analysis || {}).length}</p>
-                  </div>
-                </div>
-              )}
+              <div>
+                <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Trading Recommendations</h4>
+                <ul style={{ fontSize: '14px', lineHeight: 1.5, color: '#333', paddingLeft: '20px', margin: 0 }}>
+                  <li style={{ marginBottom: '5px' }}>Consider DCA strategy for BTC accumulation</li>
+                  <li style={{ marginBottom: '5px' }}>ETH showing strength for swing trading</li>
+                  <li style={{ marginBottom: '5px' }}>SONIC early adoption opportunity</li>
+                </ul>
+              </div>
             </div>
           ) : (
             <div style={{

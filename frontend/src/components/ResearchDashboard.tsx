@@ -38,7 +38,7 @@ const ResearchDashboard: React.FC = () => {
     totalRewards: 0,
     votingPower: 0
   });
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const [stakeAmount, setStakeAmount] = useState('');
 
   useEffect(() => {
@@ -241,7 +241,7 @@ const ResearchDashboard: React.FC = () => {
                           {content.finalized ? (
                             <Badge variant="secondary">Finalized</Badge>
                           ) : (
-                            <Badge variant="outline">Active</Badge>
+                            <Badge variant="default">Active</Badge>
                           )}
                         </div>
                       </div>

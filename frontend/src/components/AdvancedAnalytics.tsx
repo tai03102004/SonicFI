@@ -42,9 +42,16 @@ interface MarketSignal {
   impact: 'high' | 'medium' | 'low';
 }
 
+const mockSentimentData: SentimentData[] = [
+  { source: 'Twitter', sentiment: 0.3, confidence: 0.8, volume: 15000, trend: 'up' },
+  { source: 'Reddit', sentiment: 0.1, confidence: 0.7, volume: 8500, trend: 'stable' },
+  { source: 'News', sentiment: 0.4, confidence: 0.9, volume: 2200, trend: 'up' },
+  { source: 'Telegram', sentiment: -0.1, confidence: 0.6, volume: 5600, trend: 'down' }
+];
+
 const AdvancedAnalytics: React.FC = () => {
-  const [marketData, setMarketData] = useState<MarketData[]>([]);
-  const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
+  const [, setMarketData] = useState<MarketData[]>([]);
+  const [sentimentData] = useState<SentimentData[]>(mockSentimentData);
   const [technicalIndicators, setTechnicalIndicators] = useState<TechnicalIndicator[]>([]);
   const [marketSignals, setMarketSignals] = useState<MarketSignal[]>([]);
   const [historicalData, setHistoricalData] = useState<any[]>([]);
@@ -68,7 +75,7 @@ const AdvancedAnalytics: React.FC = () => {
   const fetchAllData = async () => {
     setLoading(true);
     try {
-      const [market, sentiment, technical, signals, historical] = await Promise.all([
+      const [market, technical, signals, historical] = await Promise.all([
         fetch(`/api/analytics/market?token=${selectedToken}&timeframe=${timeFrame}`).then(r => r.json()),
         fetch(`/api/analytics/sentiment?token=${selectedToken}`).then(r => r.json()),
         fetch(`/api/analytics/technical?token=${selectedToken}`).then(r => r.json()),
@@ -77,7 +84,6 @@ const AdvancedAnalytics: React.FC = () => {
       ]);
       
       setMarketData(market);
-      setSentimentData(sentiment);
       setTechnicalIndicators(technical);
       setMarketSignals(signals);
       setHistoricalData(historical);

@@ -12,16 +12,21 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "ethers": "^5.8.0",
+    "ethers": "^6.15.0",
+    "framer-motion": "^12.23.12",
+    "lucide-react": "^0.542.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "recharts": "^3.1.2"
+    "react-error-boundary": "^6.0.0",
+    "recharts": "^3.1.2",
+    "web3": "^4.16.0"
   },
   "devDependencies": {
     "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^4.7.0",
     "typescript": "^5.9.2",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vite-plugin-html": "^3.2.2"
   }
 }
