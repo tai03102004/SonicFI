@@ -166,11 +166,13 @@ const ReputationDashboard: React.FC = () => {
         justifyContent: 'center', 
         alignItems: 'center', 
         height: '400px',
-        fontFamily: 'Arial, sans-serif'
+        fontFamily: 'Inter, sans-serif',
+        backgroundColor: '#0f0f0f',
+        color: '#ffffff'
       }}>
         <div style={{ textAlign: 'center' }}>
           <h2 style={{ fontSize: '24px', marginBottom: '20px' }}>Connect Your Wallet</h2>
-          <p style={{ color: '#666', marginBottom: '20px' }}>Connect your wallet to view your reputation dashboard</p>
+          <p style={{ color: '#aaa', marginBottom: '20px' }}>Connect your wallet to view your reputation dashboard</p>
           <button
             onClick={connectWallet}
             style={{
@@ -197,7 +199,9 @@ const ReputationDashboard: React.FC = () => {
         justifyContent: 'center', 
         alignItems: 'center', 
         height: '400px',
-        fontFamily: 'Arial, sans-serif'
+        fontFamily: 'Inter, sans-serif',
+        backgroundColor: '#0f0f0f',
+        color: '#ffffff'
       }}>
         <div>Loading reputation data...</div>
       </div>
@@ -209,13 +213,13 @@ const ReputationDashboard: React.FC = () => {
   const levelProgress = getLevelProgress(userReputation.totalScore);
 
   return (
-    <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px', maxWidth: '1400px', margin: '0 auto' }}>
+    <div style={{ fontFamily: 'Inter, sans-serif', padding: '20px', maxWidth: '1400px', margin: '0 auto', backgroundColor: '#0f0f0f', color: '#ffffff' }}>
       {/* Header */}
       <div style={{ marginBottom: '30px' }}>
         <h1 style={{ fontSize: '32px', fontWeight: 'bold', margin: '0 0 10px 0' }}>
           Reputation Dashboard
         </h1>
-        <p style={{ color: '#666', margin: 0 }}>
+        <p style={{ color: '#aaa', margin: 0 }}>
           Track your community contributions and expertise recognition
         </p>
       </div>
@@ -247,7 +251,7 @@ const ReputationDashboard: React.FC = () => {
             <div style={{ fontSize: '24px', fontWeight: 'bold', color: currentLevel.color }}>
               #{userReputation.rankingPosition}
             </div>
-            <div style={{ fontSize: '14px', color: '#666' }}>Global Rank</div>
+            <div style={{ fontSize: '14px', color: '#aaa' }}>Global Rank</div>
           </div>
         </div>
 
@@ -264,7 +268,7 @@ const ReputationDashboard: React.FC = () => {
             <div style={{ 
               width: '100%', 
               height: '12px', 
-              backgroundColor: 'rgba(255,255,255,0.3)', 
+              backgroundColor: '#333', 
               borderRadius: '6px',
               overflow: 'hidden'
             }}>
@@ -272,8 +276,7 @@ const ReputationDashboard: React.FC = () => {
                 width: `${levelProgress}%`,
                 height: '100%',
                 backgroundColor: currentLevel.color,
-                borderRadius: '6px',
-                transition: 'width 0.3s ease'
+                borderRadius: '6px'
               }} />
             </div>
           </div>
@@ -298,38 +301,38 @@ const ReputationDashboard: React.FC = () => {
 
       {/* Stats Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '30px' }}>
-        <div style={{ border: '1px solid #ddd', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
+        <div style={{ border: '1px solid #444', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
           <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#10B981' }}>
             {userReputation.votingAccuracy.toLocaleString()}
           </div>
-          <div style={{ fontSize: '14px', color: '#666' }}>Voting Accuracy</div>
+          <div style={{ fontSize: '14px', color: '#aaa' }}>Voting Accuracy</div>
         </div>
 
-        <div style={{ border: '1px solid #ddd', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
+        <div style={{ border: '1px solid #444', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
           <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#3B82F6' }}>
             {userReputation.communityContribution.toLocaleString()}
           </div>
-          <div style={{ fontSize: '14px', color: '#666' }}>Community Points</div>
+          <div style={{ fontSize: '14px', color: '#aaa' }}>Community Points</div>
         </div>
 
-        <div style={{ border: '1px solid #ddd', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
+        <div style={{ border: '1px solid #444', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
           <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#8B5CF6' }}>
             {userReputation.aiValidationScore.toLocaleString()}
           </div>
-          <div style={{ fontSize: '14px', color: '#666' }}>AI Validation Score</div>
+          <div style={{ fontSize: '14px', color: '#aaa' }}>AI Validation Score</div>
         </div>
 
-        <div style={{ border: '1px solid #ddd', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
+        <div style={{ border: '1px solid #444', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
           <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#F59E0B' }}>
             {userReputation.followerCount.toLocaleString()}
           </div>
-          <div style={{ fontSize: '14px', color: '#666' }}>Followers</div>
+          <div style={{ fontSize: '14px', color: '#aaa' }}>Followers</div>
         </div>
       </div>
 
       {/* Navigation Tabs */}
       <div style={{ marginBottom: '30px' }}>
-        <div style={{ display: 'flex', gap: '5px', borderBottom: '1px solid #ddd' }}>
+        <div style={{ display: 'flex', gap: '5px', borderBottom: '1px solid #444' }}>
           {['overview', 'expertise', 'activities', 'achievements'].map(tab => (
             <button
               key={tab}
@@ -338,7 +341,7 @@ const ReputationDashboard: React.FC = () => {
                 padding: '12px 24px',
                 border: 'none',
                 backgroundColor: selectedTab === tab ? '#2563eb' : 'transparent',
-                color: selectedTab === tab ? 'white' : '#666',
+                color: selectedTab === tab ? 'white' : '#aaa',
                 borderRadius: '8px 8px 0 0',
                 cursor: 'pointer',
                 fontSize: '14px',
@@ -366,7 +369,7 @@ const ReputationDashboard: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   padding: '15px',
-                  border: '1px solid #ddd',
+                  border: '1px solid #444',
                   borderRadius: '8px',
                   marginBottom: '10px'
                 }}>
@@ -377,7 +380,7 @@ const ReputationDashboard: React.FC = () => {
                     <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>
                       {activity.actionType.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                     </div>
-                    <div style={{ fontSize: '12px', color: '#666' }}>
+                    <div style={{ fontSize: '12px', color: '#aaa' }}>
                       {new Date(activity.timestamp).toLocaleDateString()}
                       {activity.aiValidated && (
                         <span style={{ marginLeft: '10px', color: '#10B981' }}>
@@ -409,16 +412,16 @@ const ReputationDashboard: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   padding: '12px',
-                  border: '1px solid #ddd',
+                  border: '1px solid #444',
                   borderRadius: '8px',
                   marginBottom: '8px',
-                  backgroundColor: entry.address.toLowerCase() === connectedAccount.toLowerCase() ? '#eff6ff' : '#fff'
+                  backgroundColor: entry.address.toLowerCase() === connectedAccount.toLowerCase() ? '#1f2937' : '#0f0f0f'
                 }}>
                   <div style={{ 
                     width: '30px', 
                     textAlign: 'center', 
                     fontWeight: 'bold',
-                    color: index < 3 ? '#F59E0B' : '#666'
+                    color: index < 3 ? '#F59E0B' : '#aaa'
                   }}>
                     {entry.rank}
                   </div>
@@ -426,13 +429,13 @@ const ReputationDashboard: React.FC = () => {
                     <div style={{ fontWeight: 'bold', fontSize: '14px' }}>
                       {entry.ensName || `${entry.address.slice(0, 6)}...${entry.address.slice(-4)}`}
                     </div>
-                    <div style={{ fontSize: '12px', color: '#666' }}>
+                    <div style={{ fontSize: '12px', color: '#aaa' }}>
                       {entry.totalScore.toLocaleString()} points
                     </div>
                   </div>
                   <div style={{
                     fontSize: '12px',
-                    color: entry.change > 0 ? '#10B981' : entry.change < 0 ? '#EF4444' : '#666'
+                    color: entry.change > 0 ? '#10B981' : entry.change < 0 ? '#EF4444' : '#aaa'
                   }}>
                     {entry.change > 0 ? '↗' : entry.change < 0 ? '↘' : '→'} {Math.abs(entry.change)}
                   </div>
@@ -455,10 +458,10 @@ const ReputationDashboard: React.FC = () => {
               
               return (
                 <div key={area} style={{
-                  border: `2px solid ${isExpert ? '#10B981' : '#ddd'}`,
+                  border: `2px solid ${isExpert ? '#10B981' : '#444'}`,
                   borderRadius: '12px',
                   padding: '20px',
-                  backgroundColor: isExpert ? '#f0fdf4' : '#fff'
+                  backgroundColor: isExpert ? '#1f2937' : '#0f0f0f'
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
                     <h4 style={{ margin: 0, fontSize: '16px', fontWeight: 'bold' }}>
@@ -486,7 +489,7 @@ const ReputationDashboard: React.FC = () => {
                     <div style={{
                       width: '100%',
                       height: '8px',
-                      backgroundColor: '#e5e7eb',
+                      backgroundColor: '#333',
                       borderRadius: '4px',
                       overflow: 'hidden'
                     }}>
@@ -499,7 +502,7 @@ const ReputationDashboard: React.FC = () => {
                     </div>
                   </div>
                   
-                  <div style={{ fontSize: '12px', color: '#666' }}>
+                  <div style={{ fontSize: '12px', color: '#aaa' }}>
                     {score < 30 && 'Beginner level - Keep learning!'}
                     {score >= 30 && score < 70 && 'Intermediate level - You\'re making progress!'}
                     {score >= 70 && 'Expert level - Outstanding expertise!'}
@@ -522,9 +525,11 @@ const ReputationDashboard: React.FC = () => {
               onChange={(e) => setSelectedTimeframe(e.target.value)}
               style={{
                 padding: '8px 12px',
-                border: '1px solid #ddd',
+                border: '1px solid #444',
                 borderRadius: '6px',
-                fontSize: '14px'
+                fontSize: '14px',
+                backgroundColor: '#0f0f0f',
+                color: '#aaa'
               }}
             >
               <option value="7d">Last 7 days</option>
@@ -540,7 +545,7 @@ const ReputationDashboard: React.FC = () => {
                 display: 'flex',
                 alignItems: 'center',
                 padding: '15px',
-                border: '1px solid #ddd',
+                border: '1px solid #444',
                 borderRadius: '8px',
                 marginBottom: '10px'
               }}>
@@ -551,7 +556,7 @@ const ReputationDashboard: React.FC = () => {
                   <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>
                     {activity.actionType.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                   </div>
-                  <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>
+                  <div style={{ fontSize: '12px', color: '#aaa', marginBottom: '4px' }}>
                     {new Date(activity.timestamp).toLocaleString()}
                   </div>
                   {activity.evidenceHash && (
@@ -591,7 +596,7 @@ const ReputationDashboard: React.FC = () => {
                 border: `2px solid ${getRarityColor(achievement.rarity)}`,
                 borderRadius: '12px',
                 padding: '20px',
-                backgroundColor: '#fff',
+                backgroundColor: '#0f0f0f',
                 textAlign: 'center',
                 position: 'relative'
               }}>
@@ -618,7 +623,7 @@ const ReputationDashboard: React.FC = () => {
                   {achievement.name}
                 </h4>
                 
-                <p style={{ margin: '0 0 15px 0', fontSize: '12px', color: '#666', lineHeight: 1.4 }}>
+                <p style={{ margin: '0 0 15px 0', fontSize: '12px', color: '#aaa', lineHeight: 1.4 }}>
                   {achievement.description}
                 </p>
                 
@@ -633,7 +638,7 @@ const ReputationDashboard: React.FC = () => {
                     <div style={{
                       width: '100%',
                       height: '6px',
-                      backgroundColor: '#e5e7eb',
+                      backgroundColor: '#333',
                       borderRadius: '3px',
                       overflow: 'hidden'
                     }}>

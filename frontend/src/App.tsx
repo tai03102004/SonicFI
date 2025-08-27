@@ -6,6 +6,8 @@ import LoadingSpinner from './components/LoadingSpinner';
 // Lazy load components for better performance
 const SimpleResearchDashboard = lazy(() => import('./components/SimpleResearchDashboard'));
 const AdvancedAnalytics = lazy(() => import('./components/AdvancedAnalytics'));
+const AIModelMarketplace = lazy(() => import('./components/advanced/AIModelMarketplace'));
+const ReputationDashboard = lazy(() => import('./components/advanced/ReputationDashboard'));
 
 const App: React.FC = () => {
   return (
@@ -18,6 +20,8 @@ const App: React.FC = () => {
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<SimpleResearchDashboard />} />
               <Route path="/analytics" element={<AdvancedAnalytics />} />
+              <Route path="/ai-models" element={<AIModelMarketplace />} />
+              <Route path="/reputation" element={<ReputationDashboard />} />
               <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Routes>
           </Suspense>

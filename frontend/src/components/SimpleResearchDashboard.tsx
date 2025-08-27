@@ -55,12 +55,12 @@ const SimpleResearchDashboard: React.FC = () => {
   }, [stakeAmount]);
 
   return (
-    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
+    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto', backgroundColor: '#0f0f0f', minHeight: '100vh' }}>
       <div style={{ marginBottom: '30px', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '32px', fontWeight: 'bold', margin: '0 0 10px 0', color: '#1a1a1a' }}>
+        <h1 style={{ fontSize: '32px', fontWeight: 'bold', margin: '0 0 10px 0', color: '#f9fafb' }}>
           AI Research Platform
         </h1>
-        <p style={{ fontSize: '16px', color: '#666', margin: 0 }}>
+        <p style={{ fontSize: '16px', color: '#9ca3af', margin: 0 }}>
           Decentralized knowledge curation powered by community and AI
         </p>
       </div>
@@ -72,19 +72,19 @@ const SimpleResearchDashboard: React.FC = () => {
         marginBottom: '30px' 
       }}>
         {[
-          { label: 'Total Staked', value: '500.00 S', color: '#2563eb' },
-          { label: 'Accuracy Score', value: '85', color: '#dc2626' },
-          { label: 'Total Rewards', value: '120.00 S', color: '#059669' },
-          { label: 'Voting Power', value: '1500', color: '#7c3aed' }
+          { label: 'Total Staked', value: '500.00 S', color: '#3b82f6' },
+          { label: 'Accuracy Score', value: '85', color: '#10b981' },
+          { label: 'Total Rewards', value: '120.00 S', color: '#8b5cf6' },
+          { label: 'Voting Power', value: '1500', color: '#f59e0b' }
         ].map((stat, index) => (
           <div key={index} style={{ 
-            border: '1px solid #ddd', 
-            borderRadius: '8px', 
+            border: '1px solid #374151', 
+            borderRadius: '12px', 
             padding: '20px', 
-            backgroundColor: '#fff',
+            backgroundColor: '#1f2937',
             textAlign: 'center'
           }}>
-            <h3 style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#666', textTransform: 'uppercase' }}>
+            <h3 style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#9ca3af', textTransform: 'uppercase' }}>
               {stat.label}
             </h3>
             <p style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: stat.color }}>
@@ -96,7 +96,7 @@ const SimpleResearchDashboard: React.FC = () => {
 
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '30px' }}>
         <div>
-          <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px' }}>
+          <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px', color: '#f9fafb' }}>
             Latest AI Research Reports
           </h2>
           
@@ -105,55 +105,54 @@ const SimpleResearchDashboard: React.FC = () => {
               <div
                 key={content.id}
                 style={{
-                  border: selectedContent?.id === content.id ? '2px solid #2563eb' : '1px solid #ddd',
-                  borderRadius: '8px',
+                  border: selectedContent?.id === content.id ? '2px solid #3b82f6' : '1px solid #374151',
+                  borderRadius: '12px',
                   padding: '20px',
                   cursor: 'pointer',
-                  backgroundColor: selectedContent?.id === content.id ? '#eff6ff' : '#fff'
+                  backgroundColor: selectedContent?.id === content.id ? '#1e3a8a20' : '#1f2937'
                 }}
                 onClick={() => setSelectedContent(content)}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
                   <div>
-                    <h3 style={{ margin: '0 0 5px 0', fontSize: '18px', fontWeight: 'bold' }}>
+                    <h3 style={{ margin: '0 0 5px 0', fontSize: '18px', fontWeight: 'bold', color: '#f9fafb' }}>
                       Research Report #{content.id}
                     </h3>
-                    <p style={{ margin: 0, fontSize: '14px', color: '#666' }}>
+                    <p style={{ margin: 0, fontSize: '14px', color: '#9ca3af' }}>
                       {new Date(content.timestamp * 1000).toLocaleDateString()}
                     </p>
                   </div>
                   <span style={{
                     padding: '4px 8px',
-                    borderRadius: '4px',
+                    borderRadius: '6px',
                     fontSize: '12px',
                     fontWeight: 'bold',
-                    backgroundColor: content.finalized ? '#dcfce7' : '#fef3c7',
-                    color: content.finalized ? '#166534' : '#a16207'
+                    backgroundColor: content.finalized ? '#065f46' : '#92400e',
+                    color: content.finalized ? '#34d399' : '#fbbf24'
                   }}>
                     {content.finalized ? 'Finalized' : 'Active'}
                   </span>
                 </div>
 
                 <div style={{ marginBottom: '15px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', color: '#666', marginBottom: '5px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', color: '#9ca3af', marginBottom: '5px' }}>
                     <span>Community Sentiment</span>
                     <span>{formatTokenAmount(content.totalStaked)} S staked</span>
                   </div>
                   <div style={{ 
                     width: '100%', 
                     height: '8px', 
-                    backgroundColor: '#e5e5e5', 
+                    backgroundColor: '#374151', 
                     borderRadius: '4px',
                     overflow: 'hidden'
                   }}>
                     <div style={{
                       width: `${getVotingProgress(content)}%`,
                       height: '100%',
-                      backgroundColor: getVotingProgress(content) > 50 ? '#10b981' : '#ef4444',
-                      transition: 'width 0.3s ease'
+                      backgroundColor: getVotingProgress(content) > 50 ? '#10b981' : '#ef4444'
                     }} />
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#888', marginTop: '2px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: '#6b7280', marginTop: '2px' }}>
                     <span>👍 {formatTokenAmount(content.positiveVotes)} S</span>
                     <span>👎 {formatTokenAmount(content.negativeVotes)} S</span>
                   </div>
@@ -169,9 +168,11 @@ const SimpleResearchDashboard: React.FC = () => {
                       style={{
                         flex: 1,
                         padding: '8px 12px',
-                        border: '1px solid #ddd',
-                        borderRadius: '4px',
-                        fontSize: '14px'
+                        border: '1px solid #374151',
+                        borderRadius: '6px',
+                        fontSize: '14px',
+                        backgroundColor: '#111827',
+                        color: '#e5e7eb'
                       }}
                       onClick={(e) => e.stopPropagation()}
                     />
@@ -183,9 +184,9 @@ const SimpleResearchDashboard: React.FC = () => {
                       style={{
                         padding: '8px 16px',
                         border: '1px solid #10b981',
-                        borderRadius: '4px',
-                        backgroundColor: '#fff',
-                        color: '#10b981',
+                        borderRadius: '6px',
+                        backgroundColor: '#065f46',
+                        color: '#34d399',
                         cursor: 'pointer',
                         fontSize: '14px'
                       }}
@@ -200,9 +201,9 @@ const SimpleResearchDashboard: React.FC = () => {
                       style={{
                         padding: '8px 16px',
                         border: '1px solid #ef4444',
-                        borderRadius: '4px',
-                        backgroundColor: '#fff',
-                        color: '#ef4444',
+                        borderRadius: '6px',
+                        backgroundColor: '#7f1d1d',
+                        color: '#f87171',
                         cursor: 'pointer',
                         fontSize: '14px'
                       }}
@@ -217,34 +218,33 @@ const SimpleResearchDashboard: React.FC = () => {
         </div>
 
         <div>
-          <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px' }}>
+          <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px', color: '#f9fafb' }}>
             Research Details
           </h2>
           
           {selectedContent ? (
-            <div style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '20px', backgroundColor: '#fff' }}>
+            <div style={{ border: '1px solid #374151', borderRadius: '12px', padding: '20px', backgroundColor: '#1f2937' }}>
               <div style={{ marginBottom: '20px' }}>
-                <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Executive Summary</h4>
-                <p style={{ fontSize: '14px', lineHeight: 1.5, color: '#333' }}>
+                <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#f9fafb' }}>Executive Summary</h4>
+                <p style={{ fontSize: '14px', lineHeight: 1.5, color: '#d1d5db' }}>
                   Current market analysis shows mixed signals with Bitcoin showing consolidation patterns while Ethereum demonstrates stronger momentum. Sonic blockchain integration provides positive outlook for DeFi adoption.
                 </p>
               </div>
 
               <div style={{ marginBottom: '20px' }}>
-                <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Confidence Score</h4>
+                <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#f9fafb' }}>Confidence Score</h4>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <div style={{
                     flex: 1,
                     height: '20px',
-                    backgroundColor: '#e5e5e5',
+                    backgroundColor: '#374151',
                     borderRadius: '10px',
                     overflow: 'hidden'
                   }}>
                     <div style={{
                       width: '78%',
                       height: '100%',
-                      backgroundColor: '#f59e0b',
-                      transition: 'width 0.3s ease'
+                      backgroundColor: '#f59e0b'
                     }} />
                   </div>
                   <span style={{
@@ -258,7 +258,7 @@ const SimpleResearchDashboard: React.FC = () => {
               </div>
 
               <div style={{ marginBottom: '20px' }}>
-                <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Price Predictions</h4>
+                <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#f9fafb' }}>Price Predictions</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {[
                     { token: 'BTC', trend: 'up', change: 5.2 },
@@ -266,7 +266,7 @@ const SimpleResearchDashboard: React.FC = () => {
                     { token: 'SONIC', trend: 'up', change: 12.4 }
                   ].map((prediction) => (
                     <div key={prediction.token} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '14px', fontWeight: 'bold' }}>{prediction.token}</span>
+                      <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#e5e7eb' }}>{prediction.token}</span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                         <span style={{ fontSize: '20px' }}>
                           {prediction.trend === 'up' ? '📈' : '📉'}
@@ -285,8 +285,8 @@ const SimpleResearchDashboard: React.FC = () => {
               </div>
 
               <div>
-                <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Trading Recommendations</h4>
-                <ul style={{ fontSize: '14px', lineHeight: 1.5, color: '#333', paddingLeft: '20px', margin: 0 }}>
+                <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#f9fafb' }}>Trading Recommendations</h4>
+                <ul style={{ fontSize: '14px', lineHeight: 1.5, color: '#d1d5db', paddingLeft: '20px', margin: 0 }}>
                   <li style={{ marginBottom: '5px' }}>Consider DCA strategy for BTC accumulation</li>
                   <li style={{ marginBottom: '5px' }}>ETH showing strength for swing trading</li>
                   <li style={{ marginBottom: '5px' }}>SONIC early adoption opportunity</li>
@@ -295,14 +295,14 @@ const SimpleResearchDashboard: React.FC = () => {
             </div>
           ) : (
             <div style={{
-              border: '1px solid #ddd',
-              borderRadius: '8px',
+              border: '1px solid #374151',
+              borderRadius: '12px',
               padding: '40px',
               textAlign: 'center',
-              backgroundColor: '#f9f9f9'
+              backgroundColor: '#1f2937'
             }}>
               <div style={{ fontSize: '48px', marginBottom: '10px' }}>📊</div>
-              <p style={{ fontSize: '16px', color: '#666' }}>
+              <p style={{ fontSize: '16px', color: '#9ca3af' }}>
                 Select a research report to view detailed analysis
               </p>
             </div>

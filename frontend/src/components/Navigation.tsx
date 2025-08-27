@@ -6,14 +6,17 @@ const Navigation: React.FC = () => {
 
   const navItems = [
     { path: '/dashboard', label: 'Dashboard', icon: '📊' },
-    { path: '/analytics', label: 'Analytics', icon: '📈' }
+    { path: '/analytics', label: 'Analytics', icon: '📈' },
+    { path: '/ai-models', label: 'AI Models', icon: '🤖' },
+    { path: '/reputation', label: 'Reputation', icon: '🏆' }
   ];
 
   return (
     <nav style={{
-      backgroundColor: '#1a1a1a',
+      backgroundColor: '#111827',
       padding: '0 20px',
-      borderBottom: '1px solid #333'
+      borderBottom: '1px solid #374151',
+      backdropFilter: 'blur(8px)'
     }}>
       <div style={{
         maxWidth: '1400px',
@@ -27,15 +30,19 @@ const Navigation: React.FC = () => {
           to="/dashboard" 
           style={{
             textDecoration: 'none',
-            color: 'white',
+            color: '#f9fafb',
             fontSize: '20px',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
           }}
         >
-          🚀 AI SocialFi
+          <span style={{ fontSize: '24px' }}>⚡</span>
+          AI SocialFi
         </Link>
 
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div style={{ display: 'flex', gap: '4px' }}>
           {navItems.map(item => (
             <Link
               key={item.path}
@@ -43,11 +50,12 @@ const Navigation: React.FC = () => {
               style={{
                 textDecoration: 'none',
                 padding: '8px 16px',
-                borderRadius: '6px',
-                color: location.pathname === item.path ? '#2563eb' : '#ccc',
-                backgroundColor: location.pathname === item.path ? '#2563eb20' : 'transparent',
+                borderRadius: '8px',
+                color: location.pathname === item.path ? '#3b82f6' : '#9ca3af',
+                backgroundColor: location.pathname === item.path ? '#1e3a8a20' : 'transparent',
                 fontSize: '14px',
-                fontWeight: '500'
+                fontWeight: '500',
+                border: location.pathname === item.path ? '1px solid #1e3a8a40' : '1px solid transparent'
               }}
             >
               <span style={{ marginRight: '6px' }}>{item.icon}</span>
@@ -58,11 +66,12 @@ const Navigation: React.FC = () => {
 
         <button style={{
           padding: '8px 16px',
-          backgroundColor: '#2563eb',
-          color: 'white',
-          borderRadius: '6px',
+          backgroundColor: '#3b82f6',
+          color: '#ffffff',
+          borderRadius: '8px',
           fontSize: '14px',
-          fontWeight: 'bold'
+          fontWeight: 'bold',
+          border: '1px solid #2563eb'
         }}>
           Connect Wallet
         </button>

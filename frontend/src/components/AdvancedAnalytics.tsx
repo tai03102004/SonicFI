@@ -127,10 +127,10 @@ const AdvancedAnalytics: React.FC = () => {
 
   const renderMarketOverview = () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginBottom: '30px' }}>
-      <div style={{ border: '1px solid #ddd', borderRadius: '12px', padding: '20px', backgroundColor: '#fff' }}>
+      <div style={{ border: '1px solid #374151', borderRadius: '12px', padding: '20px', backgroundColor: '#1f2937' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
-            <p style={{ margin: '0 0 5px 0', fontSize: '14px', color: '#666' }}>Overall Sentiment</p>
+            <p style={{ margin: '0 0 5px 0', fontSize: '14px', color: '#9ca3af' }}>Overall Sentiment</p>
             <p style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: getSentimentColor(overallSentiment) }}>
               {(overallSentiment * 100).toFixed(1)}%
             </p>
@@ -140,7 +140,7 @@ const AdvancedAnalytics: React.FC = () => {
         <div style={{ 
           width: '100%', 
           height: '6px', 
-          backgroundColor: '#e5e7eb', 
+          backgroundColor: '#374151', 
           borderRadius: '3px',
           marginTop: '10px',
           overflow: 'hidden'
@@ -154,10 +154,10 @@ const AdvancedAnalytics: React.FC = () => {
         </div>
       </div>
 
-      <div style={{ border: '1px solid #ddd', borderRadius: '12px', padding: '20px', backgroundColor: '#fff' }}>
+      <div style={{ border: '1px solid #374151', borderRadius: '12px', padding: '20px', backgroundColor: '#1f2937' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
-            <p style={{ margin: '0 0 5px 0', fontSize: '14px', color: '#666' }}>Technical Score</p>
+            <p style={{ margin: '0 0 5px 0', fontSize: '14px', color: '#9ca3af' }}>Technical Score</p>
             <p style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: getSentimentColor(technicalScore / 100) }}>
               {technicalScore.toFixed(1)}
             </p>
@@ -167,7 +167,7 @@ const AdvancedAnalytics: React.FC = () => {
         <div style={{ 
           width: '100%', 
           height: '6px', 
-          backgroundColor: '#e5e7eb', 
+          backgroundColor: '#374151', 
           borderRadius: '3px',
           marginTop: '10px',
           overflow: 'hidden'
@@ -181,32 +181,32 @@ const AdvancedAnalytics: React.FC = () => {
         </div>
       </div>
 
-      <div style={{ border: '1px solid #ddd', borderRadius: '12px', padding: '20px', backgroundColor: '#fff' }}>
+      <div style={{ border: '1px solid #374151', borderRadius: '12px', padding: '20px', backgroundColor: '#1f2937' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
-            <p style={{ margin: '0 0 5px 0', fontSize: '14px', color: '#666' }}>Active Signals</p>
+            <p style={{ margin: '0 0 5px 0', fontSize: '14px', color: '#9ca3af' }}>Active Signals</p>
             <p style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: '#f59e0b' }}>
               {marketSignals.filter(s => s.impact === 'high').length}
             </p>
           </div>
           <div style={{ fontSize: '32px' }}>⚡</div>
         </div>
-        <div style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+        <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '5px' }}>
           High impact signals detected
         </div>
       </div>
 
-      <div style={{ border: '1px solid #ddd', borderRadius: '12px', padding: '20px', backgroundColor: '#fff' }}>
+      <div style={{ border: '1px solid #374151', borderRadius: '12px', padding: '20px', backgroundColor: '#1f2937' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
-            <p style={{ margin: '0 0 5px 0', fontSize: '14px', color: '#666' }}>Social Volume</p>
+            <p style={{ margin: '0 0 5px 0', fontSize: '14px', color: '#9ca3af' }}>Social Volume</p>
             <p style={{ margin: 0, fontSize: '24px', fontWeight: 'bold', color: '#6366f1' }}>
               {sentimentData.reduce((sum, d) => sum + d.volume, 0).toLocaleString()}
             </p>
           </div>
           <div style={{ fontSize: '32px' }}>👥</div>
         </div>
-        <div style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+        <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '5px' }}>
           Across {sentimentData.length} platforms
         </div>
       </div>
@@ -214,15 +214,15 @@ const AdvancedAnalytics: React.FC = () => {
   );
 
   const renderSentimentAnalysis = () => (
-    <div style={{ border: '1px solid #ddd', borderRadius: '12px', padding: '20px', backgroundColor: '#fff', marginBottom: '30px' }}>
-      <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <div style={{ border: '1px solid #374151', borderRadius: '12px', padding: '20px', backgroundColor: '#1f2937', marginBottom: '30px' }}>
+      <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', color: '#f9fafb' }}>
         🧠 Multi-Source Sentiment Analysis
       </h3>
       
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
         {/* Sentiment Breakdown */}
         <div>
-          <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px' }}>Sentiment by Source</h4>
+          <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px', color: '#f9fafb' }}>Sentiment by Source</h4>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={sentimentData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -242,7 +242,7 @@ const AdvancedAnalytics: React.FC = () => {
 
         {/* Sentiment vs Volume */}
         <div>
-          <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px' }}>Sentiment vs Volume</h4>
+          <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px', color: '#f9fafb' }}>Sentiment vs Volume</h4>
           <ResponsiveContainer width="100%" height={300}>
             <ScatterChart data={sentimentData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -262,10 +262,10 @@ const AdvancedAnalytics: React.FC = () => {
             border: `2px solid ${getSentimentColor(data.sentiment)}`,
             borderRadius: '8px',
             padding: '15px',
-            backgroundColor: '#fff'
+            backgroundColor: '#1f2937'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-              <h5 style={{ margin: 0, fontSize: '16px', fontWeight: 'bold', textTransform: 'capitalize' }}>{data.source}</h5>
+              <h5 style={{ margin: 0, fontSize: '16px', fontWeight: 'bold', textTransform: 'capitalize', color: '#f9fafb' }}>{data.source}</h5>
               <span style={{
                 padding: '4px 8px',
                 borderRadius: '12px',
@@ -279,18 +279,18 @@ const AdvancedAnalytics: React.FC = () => {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
               <div>
-                <span style={{ fontSize: '12px', color: '#666' }}>Sentiment:</span>
+                <span style={{ fontSize: '12px', color: '#9ca3af' }}>Sentiment:</span>
                 <div style={{ fontSize: '16px', fontWeight: 'bold', color: getSentimentColor(data.sentiment) }}>
                   {(data.sentiment * 100).toFixed(1)}%
                 </div>
               </div>
               <div>
-                <span style={{ fontSize: '12px', color: '#666' }}>Confidence:</span>
-                <div style={{ fontSize: '16px', fontWeight: 'bold' }}>{(data.confidence * 100).toFixed(0)}%</div>
+                <span style={{ fontSize: '12px', color: '#9ca3af' }}>Confidence:</span>
+                <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#f9fafb' }}>{(data.confidence * 100).toFixed(0)}%</div>
               </div>
               <div>
-                <span style={{ fontSize: '12px', color: '#666' }}>Volume:</span>
-                <div style={{ fontSize: '16px', fontWeight: 'bold' }}>{data.volume.toLocaleString()}</div>
+                <span style={{ fontSize: '12px', color: '#9ca3af' }}>Volume:</span>
+                <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#f9fafb' }}>{data.volume.toLocaleString()}</div>
               </div>
             </div>
           </div>
@@ -300,15 +300,15 @@ const AdvancedAnalytics: React.FC = () => {
   );
 
   const renderTechnicalAnalysis = () => (
-    <div style={{ border: '1px solid #ddd', borderRadius: '12px', padding: '20px', backgroundColor: '#fff', marginBottom: '30px' }}>
-      <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <div style={{ border: '1px solid #374151', borderRadius: '12px', padding: '20px', backgroundColor: '#1f2937', marginBottom: '30px' }}>
+      <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', color: '#f9fafb' }}>
         🎯 Technical Analysis
       </h3>
       
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
         {/* Technical Indicators Radar */}
         <div>
-          <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px' }}>Technical Indicators Overview</h4>
+          <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px', color: '#f9fafb' }}>Technical Indicators Overview</h4>
           <ResponsiveContainer width="100%" height={300}>
             <RadarChart data={technicalIndicators}>
               <PolarGrid />
@@ -327,7 +327,7 @@ const AdvancedAnalytics: React.FC = () => {
 
         {/* Price Action */}
         <div>
-          <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px' }}>Price Action</h4>
+          <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px', color: '#f9fafb' }}>Price Action</h4>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={historicalData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -342,21 +342,21 @@ const AdvancedAnalytics: React.FC = () => {
 
       {/* Technical Indicators List */}
       <div style={{ marginTop: '30px' }}>
-        <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px' }}>Indicator Signals</h4>
+        <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px', color: '#f9fafb' }}>Indicator Signals</h4>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
           {technicalIndicators.map((indicator, index) => (
             <div key={index} style={{
-              border: '1px solid #ddd',
+              border: '1px solid #374151',
               borderRadius: '8px',
               padding: '15px',
-              backgroundColor: '#fff',
+              backgroundColor: '#1f2937',
               textAlign: 'center'
             }}>
-              <div style={{ fontSize: '24px', marginBottom: '8px' }}>
+              <div style={{ fontSize: '24px', marginBottom: '8px', color: '#f9fafb' }}>
                 {getSignalIcon(indicator.signal)}
               </div>
-              <h5 style={{ margin: '0 0 5px 0', fontSize: '14px', fontWeight: 'bold' }}>{indicator.name}</h5>
-              <div style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '5px' }}>
+              <h5 style={{ margin: '0 0 5px 0', fontSize: '14px', fontWeight: 'bold', color: '#f9fafb' }}>{indicator.name}</h5>
+              <div style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '5px', color: '#f9fafb' }}>
                 {indicator.value.toFixed(2)}
               </div>
               <div style={{
@@ -370,7 +370,7 @@ const AdvancedAnalytics: React.FC = () => {
               }}>
                 {indicator.signal}
               </div>
-              <div style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+              <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '5px' }}>
                 Strength: {indicator.strength.toFixed(0)}%
               </div>
             </div>
@@ -381,8 +381,8 @@ const AdvancedAnalytics: React.FC = () => {
   );
 
   const renderMarketSignals = () => (
-    <div style={{ border: '1px solid #ddd', borderRadius: '12px', padding: '20px', backgroundColor: '#fff', marginBottom: '30px' }}>
-      <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <div style={{ border: '1px solid #374151', borderRadius: '12px', padding: '20px', backgroundColor: '#1f2937', marginBottom: '30px' }}>
+      <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', color: '#f9fafb' }}>
         ⚡ Market Signals
       </h3>
       
@@ -392,7 +392,7 @@ const AdvancedAnalytics: React.FC = () => {
             border: `2px solid ${signal.impact === 'high' ? '#ef4444' : signal.impact === 'medium' ? '#f59e0b' : '#10b981'}`,
             borderRadius: '8px',
             padding: '15px',
-            backgroundColor: '#fff'
+            backgroundColor: '#1f2937'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -407,21 +407,21 @@ const AdvancedAnalytics: React.FC = () => {
                 }}>
                   {signal.impact}
                 </span>
-                <h5 style={{ margin: 0, fontSize: '16px', fontWeight: 'bold' }}>{signal.type}</h5>
+                <h5 style={{ margin: 0, fontSize: '16px', fontWeight: 'bold', color: '#f9fafb' }}>{signal.type}</h5>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '14px', fontWeight: 'bold' }}>
+                <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#f9fafb' }}>
                   Strength: {(signal.strength * 100).toFixed(0)}%
                 </div>
-                <div style={{ fontSize: '12px', color: '#666' }}>
+                <div style={{ fontSize: '12px', color: '#9ca3af' }}>
                   Confidence: {(signal.confidence * 100).toFixed(0)}%
                 </div>
               </div>
             </div>
-            <p style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#374151' }}>
+            <p style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#d1d5db' }}>
               {signal.description}
             </p>
-            <div style={{ fontSize: '12px', color: '#666' }}>
+            <div style={{ fontSize: '12px', color: '#9ca3af' }}>
               {new Date(signal.timestamp).toLocaleString()}
             </div>
           </div>
@@ -431,13 +431,13 @@ const AdvancedAnalytics: React.FC = () => {
   );
 
   return (
-    <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px', maxWidth: '1400px', margin: '0 auto' }}>
+    <div style={{ fontFamily: 'Inter, sans-serif', padding: '20px', maxWidth: '1400px', margin: '0 auto', backgroundColor: '#0f0f0f', minHeight: '100vh' }}>
       {/* Header */}
-      <div style={{ marginBottom: '30px', borderBottom: '2px solid #e5e5e5', paddingBottom: '20px' }}>
-        <h1 style={{ fontSize: '32px', fontWeight: 'bold', margin: '0 0 10px 0', color: '#1a1a1a' }}>
+      <div style={{ marginBottom: '30px', borderBottom: '2px solid #374151', paddingBottom: '20px' }}>
+        <h1 style={{ fontSize: '32px', fontWeight: 'bold', margin: '0 0 10px 0', color: '#f9fafb' }}>
           Advanced Analytics Dashboard
         </h1>
-        <p style={{ fontSize: '16px', color: '#666', margin: 0 }}>
+        <p style={{ fontSize: '16px', color: '#9ca3af', margin: 0 }}>
           Real-time market intelligence powered by AI and multi-source data analysis
         </p>
       </div>
@@ -449,10 +449,12 @@ const AdvancedAnalytics: React.FC = () => {
           onChange={(e) => setSelectedToken(e.target.value)}
           style={{
             padding: '8px 12px',
-            border: '1px solid #ddd',
-            borderRadius: '6px',
+            border: '1px solid #374151',
+            borderRadius: '8px',
             fontSize: '14px',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            backgroundColor: '#1f2937',
+            color: '#e5e7eb'
           }}
         >
           <option value="BTC">Bitcoin (BTC)</option>
@@ -465,9 +467,11 @@ const AdvancedAnalytics: React.FC = () => {
           onChange={(e) => setTimeFrame(e.target.value)}
           style={{
             padding: '8px 12px',
-            border: '1px solid #ddd',
-            borderRadius: '6px',
-            fontSize: '14px'
+            border: '1px solid #374151',
+            borderRadius: '8px',
+            fontSize: '14px',
+            backgroundColor: '#1f2937',
+            color: '#e5e7eb'
           }}
         >
           <option value="1h">1 Hour</option>
@@ -481,10 +485,10 @@ const AdvancedAnalytics: React.FC = () => {
           disabled={loading}
           style={{
             padding: '8px 16px',
-            backgroundColor: '#2563eb',
+            backgroundColor: '#3b82f6',
             color: 'white',
-            border: 'none',
-            borderRadius: '6px',
+            border: '1px solid #2563eb',
+            borderRadius: '8px',
             fontSize: '14px',
             fontWeight: 'bold',
             cursor: loading ? 'not-allowed' : 'pointer'
@@ -493,7 +497,7 @@ const AdvancedAnalytics: React.FC = () => {
           {loading ? 'Refreshing...' : '🔄 Refresh'}
         </button>
 
-        <div style={{ marginLeft: 'auto', fontSize: '12px', color: '#666' }}>
+        <div style={{ marginLeft: 'auto', fontSize: '12px', color: '#9ca3af' }}>
           Last updated: {new Date().toLocaleTimeString()}
         </div>
       </div>

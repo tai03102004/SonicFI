@@ -293,17 +293,17 @@ const AIModelMarketplace: React.FC = () => {
   };
 
   return (
-    <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px', maxWidth: '1400px', margin: '0 auto' }}>
+    <div style={{ fontFamily: 'Inter, sans-serif', padding: '20px', maxWidth: '1400px', margin: '0 auto', backgroundColor: '#0f0f0f', minHeight: '100vh' }}>
       {/* Header */}
-      <div style={{ marginBottom: '30px', borderBottom: '2px solid #e5e5e5', paddingBottom: '20px' }}>
-        <h1 style={{ fontSize: '36px', fontWeight: 'bold', margin: '0 0 10px 0', color: '#1a1a1a' }}>
+      <div style={{ marginBottom: '30px', borderBottom: '2px solid #374151', paddingBottom: '20px' }}>
+        <h1 style={{ fontSize: '36px', fontWeight: 'bold', margin: '0 0 10px 0', color: '#f9fafb' }}>
           AI Model Marketplace
         </h1>
-        <p style={{ fontSize: '16px', color: '#666', margin: 0 }}>
+        <p style={{ fontSize: '16px', color: '#9ca3af', margin: 0 }}>
           Discover, stake, and profit from community-driven AI models
         </p>
         {connectedAccount && (
-          <p style={{ fontSize: '14px', color: '#888', marginTop: '10px' }}>
+          <p style={{ fontSize: '14px', color: '#6b7280', marginTop: '10px' }}>
             Connected: {connectedAccount.slice(0, 6)}...{connectedAccount.slice(-4)}
           </p>
         )}
@@ -324,9 +324,11 @@ const AIModelMarketplace: React.FC = () => {
             onChange={(e) => setFilterCategory(e.target.value)}
             style={{
               padding: '8px 12px',
-              border: '1px solid #ddd',
-              borderRadius: '6px',
-              fontSize: '14px'
+              border: '1px solid #374151',
+              borderRadius: '8px',
+              fontSize: '14px',
+              backgroundColor: '#1f2937',
+              color: '#e5e7eb'
             }}
           >
             <option value="all">All Categories</option>
@@ -340,9 +342,11 @@ const AIModelMarketplace: React.FC = () => {
             onChange={(e) => setSortBy(e.target.value)}
             style={{
               padding: '8px 12px',
-              border: '1px solid #ddd',
-              borderRadius: '6px',
-              fontSize: '14px'
+              border: '1px solid #374151',
+              borderRadius: '8px',
+              fontSize: '14px',
+              backgroundColor: '#1f2937',
+              color: '#e5e7eb'
             }}
           >
             <option value="performance">Sort by Performance</option>
@@ -351,7 +355,7 @@ const AIModelMarketplace: React.FC = () => {
             <option value="recent">Sort by Recent</option>
           </select>
 
-          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#e5e7eb' }}>
             <input
               type="checkbox"
               checked={showMyModels}
@@ -365,10 +369,10 @@ const AIModelMarketplace: React.FC = () => {
           onClick={() => setSelectedModel({ id: -1 } as AIModel)}
           style={{
             padding: '10px 20px',
-            backgroundColor: '#2563eb',
-            color: 'white',
-            border: 'none',
-            borderRadius: '6px',
+            backgroundColor: '#3b82f6',
+            color: '#ffffff',
+            border: '1px solid #2563eb',
+            borderRadius: '8px',
             fontSize: '14px',
             fontWeight: 'bold',
             cursor: 'pointer'
@@ -381,7 +385,7 @@ const AIModelMarketplace: React.FC = () => {
       <div style={{ display: 'grid', gridTemplateColumns: selectedModel ? '1fr 400px' : '1fr', gap: '30px' }}>
         {/* Models List */}
         <div>
-          {loading && <p>Loading...</p>}
+          {loading && <p style={{ color: '#9ca3af' }}>Loading...</p>}
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '20px' }}>
             {filteredAndSortedModels.map((model) => {
@@ -392,12 +396,11 @@ const AIModelMarketplace: React.FC = () => {
                 <div
                   key={model.id}
                   style={{
-                    border: selectedModel?.id === model.id ? '2px solid #2563eb' : '1px solid #ddd',
+                    border: selectedModel?.id === model.id ? '2px solid #3b82f6' : '1px solid #374151',
                     borderRadius: '12px',
                     padding: '20px',
                     cursor: 'pointer',
-                    backgroundColor: selectedModel?.id === model.id ? '#eff6ff' : '#fff',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                    backgroundColor: selectedModel?.id === model.id ? '#1e3a8a20' : '#1f2937'
                   }}
                   onClick={() => {
                     setSelectedModel(model);
@@ -407,16 +410,16 @@ const AIModelMarketplace: React.FC = () => {
                   {/* Model Header */}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '15px' }}>
                     <div>
-                      <h3 style={{ margin: '0 0 5px 0', fontSize: '18px', fontWeight: 'bold' }}>
+                      <h3 style={{ margin: '0 0 5px 0', fontSize: '18px', fontWeight: 'bold', color: '#f9fafb' }}>
                         {model.name}
                       </h3>
-                      <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#666' }}>
+                      <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#9ca3af' }}>
                         v{model.version} • by {model.creator.slice(0, 6)}...{model.creator.slice(-4)}
                       </p>
                     </div>
                     <span style={{
                       padding: '4px 8px',
-                      borderRadius: '4px',
+                      borderRadius: '6px',
                       fontSize: '11px',
                       fontWeight: 'bold',
                       backgroundColor: status.color + '20',
@@ -434,8 +437,8 @@ const AIModelMarketplace: React.FC = () => {
                         padding: '3px 8px',
                         marginRight: '6px',
                         marginBottom: '4px',
-                        backgroundColor: '#f3f4f6',
-                        color: '#374151',
+                        backgroundColor: '#374151',
+                        color: '#d1d5db',
                         borderRadius: '12px',
                         fontSize: '11px'
                       }}>
@@ -447,7 +450,7 @@ const AIModelMarketplace: React.FC = () => {
                   {/* Description */}
                   <p style={{ 
                     fontSize: '14px', 
-                    color: '#374151', 
+                    color: '#d1d5db', 
                     lineHeight: 1.4, 
                     marginBottom: '15px',
                     display: '-webkit-box',
@@ -465,26 +468,26 @@ const AIModelMarketplace: React.FC = () => {
                     gap: '10px', 
                     marginBottom: '15px',
                     padding: '12px',
-                    backgroundColor: '#f9fafb',
-                    borderRadius: '6px'
+                    backgroundColor: '#111827',
+                    borderRadius: '8px'
                   }}>
                     <div style={{ textAlign: 'center' }}>
                       <div style={{ fontSize: '18px', fontWeight: 'bold', color: getPerformanceColor(model.successRate) }}>
                         {model.successRate.toFixed(1)}%
                       </div>
-                      <div style={{ fontSize: '11px', color: '#6b7280' }}>Success Rate</div>
+                      <div style={{ fontSize: '11px', color: '#9ca3af' }}>Success Rate</div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#374151' }}>
+                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#e5e7eb' }}>
                         {model.usageCount}
                       </div>
-                      <div style={{ fontSize: '11px', color: '#6b7280' }}>Uses</div>
+                      <div style={{ fontSize: '11px', color: '#9ca3af' }}>Uses</div>
                     </div>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#7c3aed' }}>
+                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#8b5cf6' }}>
                         {formatTokenAmount(model.totalStaked)}
                       </div>
-                      <div style={{ fontSize: '11px', color: '#6b7280' }}>Staked (S)</div>
+                      <div style={{ fontSize: '11px', color: '#9ca3af' }}>Staked (S)</div>
                     </div>
                   </div>
 
@@ -492,11 +495,11 @@ const AIModelMarketplace: React.FC = () => {
                   {userStake && userStake.active && (
                     <div style={{ 
                       padding: '8px 12px',
-                      backgroundColor: '#dbeafe',
-                      borderRadius: '6px',
+                      backgroundColor: '#1e3a8a30',
+                      borderRadius: '8px',
                       marginBottom: '10px'
                     }}>
-                      <div style={{ fontSize: '12px', color: '#1e40af' }}>
+                      <div style={{ fontSize: '12px', color: '#60a5fa' }}>
                         Your Stake: {formatTokenAmount(userStake.amount)} S
                         {userStake.rewards > 0 && (
                           <span style={{ marginLeft: '10px' }}>
@@ -518,10 +521,10 @@ const AIModelMarketplace: React.FC = () => {
                       style={{
                         flex: 1,
                         padding: '8px 12px',
-                        border: '1px solid #2563eb',
-                        borderRadius: '4px',
-                        backgroundColor: '#fff',
-                        color: '#2563eb',
+                        border: '1px solid #3b82f6',
+                        borderRadius: '6px',
+                        backgroundColor: '#1e3a8a30',
+                        color: '#60a5fa',
                         cursor: 'pointer',
                         fontSize: '12px',
                         fontWeight: 'bold'
@@ -540,10 +543,10 @@ const AIModelMarketplace: React.FC = () => {
                         style={{
                           flex: 1,
                           padding: '8px 12px',
-                          border: '1px solid #059669',
-                          borderRadius: '4px',
-                          backgroundColor: '#fff',
-                          color: '#059669',
+                          border: '1px solid #10b981',
+                          borderRadius: '6px',
+                          backgroundColor: '#065f4630',
+                          color: '#34d399',
                           cursor: 'pointer',
                           fontSize: '12px',
                           fontWeight: 'bold'
@@ -562,10 +565,10 @@ const AIModelMarketplace: React.FC = () => {
         {/* Model Details Sidebar */}
         {selectedModel && (
           <div style={{ 
-            border: '1px solid #ddd', 
+            border: '1px solid #374151', 
             borderRadius: '12px', 
             padding: '20px', 
-            backgroundColor: '#fff',
+            backgroundColor: '#1f2937',
             height: 'fit-content',
             position: 'sticky',
             top: '20px'
@@ -573,12 +576,12 @@ const AIModelMarketplace: React.FC = () => {
             {selectedModel.id === -1 ? (
               /* Create New Model Form */
               <div>
-                <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px' }}>
+                <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '20px', color: '#f9fafb' }}>
                   Create New AI Model
                 </h3>
                 
                 <div style={{ marginBottom: '15px' }}>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px' }}>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px', color: '#e5e7eb' }}>
                     Model Name *
                   </label>
                   <input
@@ -589,16 +592,18 @@ const AIModelMarketplace: React.FC = () => {
                     style={{
                       width: '100%',
                       padding: '8px 12px',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px',
+                      border: '1px solid #374151',
+                      borderRadius: '6px',
                       fontSize: '14px',
-                      boxSizing: 'border-box'
+                      boxSizing: 'border-box',
+                      backgroundColor: '#111827',
+                      color: '#e5e7eb'
                     }}
                   />
                 </div>
 
                 <div style={{ marginBottom: '15px' }}>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px' }}>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px', color: '#e5e7eb' }}>
                     Description
                   </label>
                   <textarea
@@ -609,17 +614,19 @@ const AIModelMarketplace: React.FC = () => {
                     style={{
                       width: '100%',
                       padding: '8px 12px',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px',
+                      border: '1px solid #374151',
+                      borderRadius: '6px',
                       fontSize: '14px',
                       boxSizing: 'border-box',
-                      resize: 'vertical'
+                      resize: 'vertical',
+                      backgroundColor: '#111827',
+                      color: '#e5e7eb'
                     }}
                   />
                 </div>
 
                 <div style={{ marginBottom: '15px' }}>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px' }}>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px', color: '#e5e7eb' }}>
                     Model File *
                   </label>
                   <input
@@ -629,21 +636,23 @@ const AIModelMarketplace: React.FC = () => {
                     style={{
                       width: '100%',
                       padding: '8px 12px',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px',
+                      border: '1px solid #374151',
+                      borderRadius: '6px',
                       fontSize: '14px',
-                      boxSizing: 'border-box'
+                      boxSizing: 'border-box',
+                      backgroundColor: '#111827',
+                      color: '#e5e7eb'
                     }}
                   />
                 </div>
 
                 <div style={{ marginBottom: '15px' }}>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px' }}>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px', color: '#e5e7eb' }}>
                     Categories
                   </label>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                     {categories.map(cat => (
-                      <label key={cat} style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px' }}>
+                      <label key={cat} style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: '#d1d5db' }}>
                         <input
                           type="checkbox"
                           checked={newModelForm.categories.includes(cat)}
@@ -662,7 +671,7 @@ const AIModelMarketplace: React.FC = () => {
                 </div>
 
                 <div style={{ marginBottom: '15px' }}>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px' }}>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px', color: '#e5e7eb' }}>
                     Initial Stake (S tokens)
                   </label>
                   <input
@@ -673,16 +682,18 @@ const AIModelMarketplace: React.FC = () => {
                     style={{
                       width: '100%',
                       padding: '8px 12px',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px',
+                      border: '1px solid #374151',
+                      borderRadius: '6px',
                       fontSize: '14px',
-                      boxSizing: 'border-box'
+                      boxSizing: 'border-box',
+                      backgroundColor: '#111827',
+                      color: '#e5e7eb'
                     }}
                   />
                 </div>
 
                 <div style={{ marginBottom: '20px' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#e5e7eb' }}>
                     <input
                       type="checkbox"
                       checked={newModelForm.isPublic}
@@ -698,10 +709,10 @@ const AIModelMarketplace: React.FC = () => {
                     style={{
                       flex: 1,
                       padding: '10px 20px',
-                      border: '1px solid #ddd',
-                      borderRadius: '6px',
-                      backgroundColor: '#fff',
-                      color: '#374151',
+                      border: '1px solid #374151',
+                      borderRadius: '8px',
+                      backgroundColor: '#111827',
+                      color: '#d1d5db',
                       cursor: 'pointer',
                       fontSize: '14px'
                     }}
@@ -715,8 +726,8 @@ const AIModelMarketplace: React.FC = () => {
                       flex: 1,
                       padding: '10px 20px',
                       border: 'none',
-                      borderRadius: '6px',
-                      backgroundColor: '#2563eb',
+                      borderRadius: '8px',
+                      backgroundColor: '#3b82f6',
                       color: 'white',
                       cursor: loading ? 'not-allowed' : 'pointer',
                       fontSize: '14px',
@@ -732,10 +743,10 @@ const AIModelMarketplace: React.FC = () => {
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
                   <div>
-                    <h3 style={{ fontSize: '20px', fontWeight: 'bold', margin: '0 0 5px 0' }}>
+                    <h3 style={{ fontSize: '20px', fontWeight: 'bold', margin: '0 0 5px 0', color: '#f9fafb' }}>
                       {selectedModel.name}
                     </h3>
-                    <p style={{ fontSize: '14px', color: '#666', margin: 0 }}>
+                    <p style={{ fontSize: '14px', color: '#9ca3af', margin: 0 }}>
                       v{selectedModel.version} • Created by {selectedModel.creator.slice(0, 6)}...{selectedModel.creator.slice(-4)}
                     </p>
                   </div>
@@ -758,30 +769,30 @@ const AIModelMarketplace: React.FC = () => {
                   gap: '15px', 
                   marginBottom: '20px',
                   padding: '15px',
-                  backgroundColor: '#f9fafb',
+                  backgroundColor: '#111827',
                   borderRadius: '8px'
                 }}>
                   <div>
-                    <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>Success Rate</div>
+                    <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '4px' }}>Success Rate</div>
                     <div style={{ fontSize: '20px', fontWeight: 'bold', color: getPerformanceColor(selectedModel.successRate) }}>
                       {selectedModel.successRate.toFixed(1)}%
                     </div>
                   </div>
                   <div>
-                    <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>Total Predictions</div>
-                    <div style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                    <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '4px' }}>Total Predictions</div>
+                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#e5e7eb' }}>
                       {selectedModel.performanceMetrics.totalPredictions}
                     </div>
                   </div>
                   <div>
-                    <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>Total Staked</div>
-                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#7c3aed' }}>
+                    <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '4px' }}>Total Staked</div>
+                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#8b5cf6' }}>
                       {formatTokenAmount(selectedModel.totalStaked)} S
                     </div>
                   </div>
                   <div>
-                    <div style={{ fontSize: '12px', color: '#666', marginBottom: '4px' }}>Usage Count</div>
-                    <div style={{ fontSize: '20px', fontWeight: 'bold' }}>
+                    <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '4px' }}>Usage Count</div>
+                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#e5e7eb' }}>
                       {selectedModel.usageCount}
                     </div>
                   </div>
@@ -789,21 +800,21 @@ const AIModelMarketplace: React.FC = () => {
 
                 {/* Model Description */}
                 <div style={{ marginBottom: '20px' }}>
-                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Description</h4>
-                  <p style={{ fontSize: '14px', color: '#374151', lineHeight: 1.5, margin: 0 }}>
+                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#f9fafb' }}>Description</h4>
+                  <p style={{ fontSize: '14px', color: '#d1d5db', lineHeight: 1.5, margin: 0 }}>
                     {selectedModel.description}
                   </p>
                 </div>
 
                 {/* Categories */}
                 <div style={{ marginBottom: '20px' }}>
-                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Categories</h4>
+                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#f9fafb' }}>Categories</h4>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                     {selectedModel.categories.map(cat => (
                       <span key={cat} style={{
                         padding: '4px 12px',
-                        backgroundColor: '#e5e7eb',
-                        color: '#374151',
+                        backgroundColor: '#374151',
+                        color: '#d1d5db',
                         borderRadius: '16px',
                         fontSize: '12px',
                         fontWeight: 'bold'
@@ -816,15 +827,16 @@ const AIModelMarketplace: React.FC = () => {
 
                 {/* Performance Chart */}
                 <div style={{ marginBottom: '20px' }}>
-                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px' }}>Recent Performance</h4>
+                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#f9fafb' }}>Recent Performance</h4>
                   <div style={{ 
                     height: '100px', 
-                    backgroundColor: '#f3f4f6', 
+                    backgroundColor: '#111827', 
                     borderRadius: '8px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#666'
+                    color: '#9ca3af',
+                    border: '1px solid #374151'
                   }}>
                     Performance Chart Placeholder
                   </div>
@@ -833,10 +845,10 @@ const AIModelMarketplace: React.FC = () => {
                 {/* Make Prediction Section */}
                 {selectedModel.isPublic && (
                   <div style={{ marginBottom: '20px' }}>
-                    <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px' }}>Make Prediction</h4>
+                    <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px', color: '#f9fafb' }}>Make Prediction</h4>
                     
                     <div style={{ marginBottom: '15px' }}>
-                      <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px' }}>
+                      <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px', color: '#e5e7eb' }}>
                         Your Prediction
                       </label>
                       <textarea
@@ -847,17 +859,19 @@ const AIModelMarketplace: React.FC = () => {
                         style={{
                           width: '100%',
                           padding: '8px 12px',
-                          border: '1px solid #ddd',
-                          borderRadius: '4px',
+                          border: '1px solid #374151',
+                          borderRadius: '6px',
                           fontSize: '14px',
                           boxSizing: 'border-box',
-                          resize: 'vertical'
+                          resize: 'vertical',
+                          backgroundColor: '#111827',
+                          color: '#e5e7eb'
                         }}
                       />
                     </div>
 
                     <div style={{ marginBottom: '15px' }}>
-                      <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px' }}>
+                      <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px', color: '#e5e7eb' }}>
                         Confidence Level: {predictionForm.confidence}%
                       </label>
                       <input
@@ -870,13 +884,13 @@ const AIModelMarketplace: React.FC = () => {
                           width: '100%',
                           height: '6px',
                           borderRadius: '3px',
-                          background: '#ddd'
+                          background: '#374151'
                         }}
                       />
                     </div>
 
                     <div style={{ marginBottom: '15px' }}>
-                      <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px' }}>
+                      <label style={{ display: 'block', fontSize: '14px', fontWeight: 'bold', marginBottom: '5px', color: '#e5e7eb' }}>
                         Reasoning (Optional)
                       </label>
                       <textarea
@@ -887,11 +901,13 @@ const AIModelMarketplace: React.FC = () => {
                         style={{
                           width: '100%',
                           padding: '8px 12px',
-                          border: '1px solid #ddd',
-                          borderRadius: '4px',
+                          border: '1px solid #374151',
+                          borderRadius: '6px',
                           fontSize: '14px',
                           boxSizing: 'border-box',
-                          resize: 'vertical'
+                          resize: 'vertical',
+                          backgroundColor: '#111827',
+                          color: '#e5e7eb'
                         }}
                       />
                     </div>
@@ -902,10 +918,10 @@ const AIModelMarketplace: React.FC = () => {
                       style={{
                         width: '100%',
                         padding: '12px 20px',
-                        backgroundColor: '#059669',
+                        backgroundColor: '#10b981',
                         color: 'white',
                         border: 'none',
-                        borderRadius: '6px',
+                        borderRadius: '8px',
                         fontSize: '14px',
                         fontWeight: 'bold',
                         cursor: loading || !predictionForm.prediction ? 'not-allowed' : 'pointer'
@@ -918,34 +934,34 @@ const AIModelMarketplace: React.FC = () => {
 
                 {/* Staking Section */}
                 <div style={{ marginBottom: '20px' }}>
-                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px' }}>Stake on Model</h4>
+                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px', color: '#f9fafb' }}>Stake on Model</h4>
                   
                   {userStakes[selectedModel.id] && userStakes[selectedModel.id].active ? (
                     <div style={{
                       padding: '15px',
-                      backgroundColor: '#dbeafe',
+                      backgroundColor: '#1e3a8a30',
                       borderRadius: '8px',
                       marginBottom: '15px'
                     }}>
-                      <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#1e40af', marginBottom: '8px' }}>
+                      <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#60a5fa', marginBottom: '8px' }}>
                         Your Current Stake
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                        <span style={{ fontSize: '12px', color: '#1e40af' }}>Amount:</span>
-                        <span style={{ fontSize: '12px', fontWeight: 'bold', color: '#1e40af' }}>
+                        <span style={{ fontSize: '12px', color: '#93c5fd' }}>Amount:</span>
+                        <span style={{ fontSize: '12px', fontWeight: 'bold', color: '#60a5fa' }}>
                           {formatTokenAmount(userStakes[selectedModel.id].amount)} S
                         </span>
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                        <span style={{ fontSize: '12px', color: '#1e40af' }}>Staked Since:</span>
-                        <span style={{ fontSize: '12px', color: '#1e40af' }}>
+                        <span style={{ fontSize: '12px', color: '#93c5fd' }}>Staked Since:</span>
+                        <span style={{ fontSize: '12px', color: '#93c5fd' }}>
                           {new Date(userStakes[selectedModel.id].timestamp * 1000).toLocaleDateString()}
                         </span>
                       </div>
                       {userStakes[selectedModel.id].rewards > 0 && (
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <span style={{ fontSize: '12px', color: '#1e40af' }}>Rewards Earned:</span>
-                          <span style={{ fontSize: '12px', fontWeight: 'bold', color: '#10b981' }}>
+                          <span style={{ fontSize: '12px', color: '#93c5fd' }}>Rewards Earned:</span>
+                          <span style={{ fontSize: '12px', fontWeight: 'bold', color: '#34d399' }}>
                             +{formatTokenAmount(userStakes[selectedModel.id].rewards)} S
                           </span>
                         </div>
@@ -954,12 +970,12 @@ const AIModelMarketplace: React.FC = () => {
                   ) : (
                     <div style={{
                       padding: '15px',
-                      backgroundColor: '#f3f4f6',
+                      backgroundColor: '#374151',
                       borderRadius: '8px',
                       textAlign: 'center',
                       marginBottom: '15px'
                     }}>
-                      <div style={{ fontSize: '14px', color: '#666' }}>
+                      <div style={{ fontSize: '14px', color: '#9ca3af' }}>
                         You haven't staked on this model yet
                       </div>
                     </div>
@@ -973,10 +989,10 @@ const AIModelMarketplace: React.FC = () => {
                     style={{
                       width: '100%',
                       padding: '12px 20px',
-                      backgroundColor: '#2563eb',
+                      backgroundColor: '#3b82f6',
                       color: 'white',
                       border: 'none',
-                      borderRadius: '6px',
+                      borderRadius: '8px',
                       fontSize: '14px',
                       fontWeight: 'bold',
                       cursor: 'pointer'
@@ -988,30 +1004,30 @@ const AIModelMarketplace: React.FC = () => {
 
                 {/* Recent Predictions */}
                 <div>
-                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px' }}>Recent Predictions</h4>
+                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '15px', color: '#f9fafb' }}>Recent Predictions</h4>
                   {predictions.length > 0 ? (
                     <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
                       {predictions.slice(0, 5).map((prediction, index) => (
                         <div key={index} style={{
-                          border: '1px solid #ddd',
+                          border: '1px solid #374151',
                           borderRadius: '8px',
                           padding: '12px',
                           marginBottom: '10px',
-                          backgroundColor: '#fff'
+                          backgroundColor: '#111827'
                         }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                            <div style={{ fontSize: '12px', color: '#666' }}>
+                            <div style={{ fontSize: '12px', color: '#9ca3af' }}>
                               {prediction.predictor.slice(0, 6)}...{prediction.predictor.slice(-4)}
                             </div>
-                            <div style={{ fontSize: '12px', color: '#666' }}>
+                            <div style={{ fontSize: '12px', color: '#9ca3af' }}>
                               {new Date(prediction.timestamp * 1000).toLocaleDateString()}
                             </div>
                           </div>
-                          <div style={{ fontSize: '14px', marginBottom: '8px' }}>
+                          <div style={{ fontSize: '14px', marginBottom: '8px', color: '#d1d5db' }}>
                             {prediction.predictionHash.slice(0, 50)}...
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <div style={{ fontSize: '12px' }}>
+                            <div style={{ fontSize: '12px', color: '#9ca3af' }}>
                               Confidence: {prediction.confidenceScore}%
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -1021,8 +1037,8 @@ const AIModelMarketplace: React.FC = () => {
                                   borderRadius: '4px',
                                   fontSize: '10px',
                                   fontWeight: 'bold',
-                                  backgroundColor: prediction.accurate ? '#dcfce7' : '#fee2e2',
-                                  color: prediction.accurate ? '#166534' : '#dc2626'
+                                  backgroundColor: prediction.accurate ? '#065f46' : '#7f1d1d',
+                                  color: prediction.accurate ? '#34d399' : '#f87171'
                                 }}>
                                   {prediction.accurate ? '✓ Accurate' : '✗ Inaccurate'}
                                 </span>
@@ -1032,14 +1048,14 @@ const AIModelMarketplace: React.FC = () => {
                                   borderRadius: '4px',
                                   fontSize: '10px',
                                   fontWeight: 'bold',
-                                  backgroundColor: '#fef3c7',
-                                  color: '#d97706'
+                                  backgroundColor: '#92400e',
+                                  color: '#fbbf24'
                                 }}>
                                   ⏳ Pending
                                 </span>
                               )}
                               {prediction.rewardAmount > 0 && (
-                                <span style={{ fontSize: '12px', fontWeight: 'bold', color: '#10b981' }}>
+                                <span style={{ fontSize: '12px', fontWeight: 'bold', color: '#34d399' }}>
                                   +{formatTokenAmount(prediction.rewardAmount)} S
                                 </span>
                               )}
@@ -1051,10 +1067,10 @@ const AIModelMarketplace: React.FC = () => {
                   ) : (
                     <div style={{
                       padding: '20px',
-                      backgroundColor: '#f3f4f6',
+                      backgroundColor: '#374151',
                       borderRadius: '8px',
                       textAlign: 'center',
-                      color: '#666'
+                      color: '#9ca3af'
                     }}>
                       No predictions yet. Be the first to make a prediction!
                     </div>
