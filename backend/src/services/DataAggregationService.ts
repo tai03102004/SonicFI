@@ -403,7 +403,7 @@ export class DataAggregationService extends EventEmitter {
       `;
 
       const response = await this.openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
+        model: "google/gemini-2.5-flash-image-preview:free",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.1,
         max_tokens: 500,
@@ -638,7 +638,7 @@ export class DataAggregationService extends EventEmitter {
 
     try {
       const response = await this.openai.chat.completions.create({
-        model: "gpt-4-turbo-preview",
+        model: "gpt-4-turbo",
         messages: [
           {
             role: "system",

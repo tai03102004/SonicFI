@@ -40,35 +40,20 @@ class SocialFiAIEngine:
         
     def _load_config(self) -> Dict[str, Any]:
         """Load configuration from environment variables"""
+        # Load configuration
         config = {
-            # OpenAI
             'openai_api_key': os.getenv('OPENAI_API_KEY'),
-            
-            # News APIs
+            'openai_base_url': os.getenv('OPENAI_BASE_URL', 'https://openrouter.ai/api/v1'),
+            'openai_model': os.getenv('OPENAI_MODEL', 'google/gemini-2.0-flash-exp:free'),
             'newsapi_key': os.getenv('NEWSAPI_KEY'),
-            
-            # Twitter API v2
             'twitter_bearer_token': os.getenv('TWITTER_BEARER_TOKEN'),
             'twitter_api_key': os.getenv('TWITTER_API_KEY'),
             'twitter_api_secret': os.getenv('TWITTER_API_SECRET'),
             'twitter_access_token': os.getenv('TWITTER_ACCESS_TOKEN'),
             'twitter_access_secret': os.getenv('TWITTER_ACCESS_SECRET'),
-            
-            # Reddit API
             'reddit_client_id': os.getenv('REDDIT_CLIENT_ID'),
             'reddit_client_secret': os.getenv('REDDIT_CLIENT_SECRET'),
-            
-            # Blockchain
             'sonic_rpc_url': os.getenv('SONIC_RPC_URL', 'https://rpc.sonic.network'),
-            'ai_agent_private_key': os.getenv('AI_AGENT_PRIVATE_KEY'),
-            'contract_address': os.getenv('CONTRACT_ADDRESS'),
-            
-            # Database
-            'postgres_url': os.getenv('POSTGRES_URL'),
-            'redis_url': os.getenv('REDIS_URL', 'redis://localhost:6379'),
-            
-            # Settings
-            'debug': os.getenv('DEBUG', 'false').lower() == 'true',
             'log_level': os.getenv('LOG_LEVEL', 'INFO')
         }
         
@@ -119,12 +104,32 @@ class SocialFiAIEngine:
         if tokens is None:
             tokens = ['BTC', 'ETH', 'SONIC']
         
+        # Ensure tokens is a list
+        if isinstance(tokens, str):
+            tokens = [tokens]
+        elif not isinstance(tokens, list):
+            tokens = list(tokens)
+        
         logger.info(f"📊 Starting comprehensive analysis for: {', '.join(tokens)}")
         
         try:
-            # Run NLP analysis
+            # Run NLP analysis with timeout
             logger.info("🧠 Running NLP analysis...")
-            nlp_result = await self.nlp_processor.comprehensive_market_analysis(tokens)
+            
+            try:
+                nlp_result = await asyncio.wait_for(
+                    self.nlp_processor.comprehensive_market_analysis(tokens),
+                    timeout=60.0  # 1 minute timeout
+                )
+            except asyncio.TimeoutError:
+                logger.warning("⏰ NLP analysis timed out - using fallback data")
+                nlp_result = {
+                    'social_sentiment': {token: {'overall': 0, 'volume': 0} for token in tokens},
+                    'news_sentiment': {token: {'sentiment': 0, 'confidence': 0} for token in tokens},
+                    'technical_analysis': {token: {'rsi': 50, 'current_price': 0} for token in tokens},
+                    'confidence_score': 0.3,
+                    'status': 'timeout'
+                }
             
             if 'error' in nlp_result:
                 logger.error(f"NLP Analysis failed: {nlp_result['error']}")
@@ -133,27 +138,49 @@ class SocialFiAIEngine:
             
             # Generate research report
             logger.info("📝 Generating research report...")
-            research_result = await self.research_engine.generate_daily_research(tokens)
             
-            if research_result is None:
-                logger.error("❌ Research report generation failed")
-            else:
-                logger.info(f"✅ Research report generated with hash: {research_result['content_hash']}")
+            try:
+                # Pass tokens correctly to research engine
+                research_result = await self.research_engine.generate_daily_research(tokens)
+                
+                if 'error' in research_result.get('analysis', {}):
+                    logger.warning(f"Research generation had issues: {research_result['analysis']['error']}")
+                else:
+                    logger.info(f"✅ Research report generated with confidence: {research_result.get('confidence_score', 'N/A')}")
+                
+            except Exception as e:
+                logger.error(f"Research generation failed: {str(e)}")
+                research_result = {
+                    'analysis': {
+                        'executive_summary': 'Technical analysis completed with limited data.',
+                        'confidence_score': 0.2,
+                        'error': str(e)
+                    },
+                    'research_hash': 'fallback_hash'
+                }
             
             # Combine results
-            combined_result = {
+            final_result = {
                 'nlp_analysis': nlp_result,
                 'research_report': research_result,
+                'tokens_analyzed': tokens,
                 'timestamp': datetime.now().isoformat(),
-                'tokens_analyzed': tokens
+                'overall_confidence': (
+                    nlp_result.get('confidence_score', 0.3) + 
+                    research_result.get('confidence_score', 0.3)
+                ) / 2
             }
             
-            return combined_result
+            return final_result
             
         except Exception as e:
             logger.error(f"❌ Error in comprehensive analysis: {str(e)}")
-            return {'error': str(e)}
-    
+            return {
+                'error': str(e),
+                'tokens_analyzed': tokens,
+                'timestamp': datetime.now().isoformat()
+            }
+        
     async def run_continuous_monitoring(self, tokens: list = None, interval: int = 3600):
         """Run continuous monitoring (every hour by default)"""
         if tokens is None:

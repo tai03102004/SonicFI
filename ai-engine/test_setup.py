@@ -43,7 +43,7 @@ def test_imports() -> Tuple[int, int]:
         ("spacy", "spacy", "import spacy; print(f'  spaCy: {spacy.__version__}')"),
         ("nltk", "nltk", "import nltk; print(f'  NLTK: {nltk.__version__}')"),
         ("textblob", "textblob", "from textblob import TextBlob; print('  TextBlob: OK')"),
-        ("vaderSentiment", "vader", "from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer; print('  VADER: OK')"),
+        ("vaderSentiment", "vader", "from nltk.sentiment.vader import SentimentIntensityAnalyzer; print('  VADER: OK')"),
     ]
     
     # API and utility packages
@@ -104,14 +104,14 @@ def test_spacy_models() -> bool:
 
 def test_nltk_data() -> bool:
     """Test NLTK data"""
-    print("\n📖 Testing NLTK data...")
+    print("\n📖 Testing NLTK data...") 
     
     try:
         import nltk
         
         nltk_datasets = [
             ('tokenizers/punkt', 'Punkt Tokenizer'),
-            ('vader_lexicon', 'VADER Lexicon'),
+            ('sentiment/vader_lexicon.txt', 'VADER Lexicon'),
             ('corpora/stopwords', 'Stopwords'),
             ('taggers/averaged_perceptron_tagger', 'POS Tagger'),
             ('corpora/wordnet', 'WordNet'),
@@ -273,7 +273,7 @@ def run_integration_test() -> bool:
         print(f"  ✅ TextBlob sentiment: {sentiment:.2f}")
         
         # Test VADER
-        from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+        from nltk.sentiment.vader import SentimentIntensityAnalyzer
         analyzer = SentimentIntensityAnalyzer()
         vader_scores = analyzer.polarity_scores(text)
         
