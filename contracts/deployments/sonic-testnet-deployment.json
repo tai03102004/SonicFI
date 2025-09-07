@@ -1,0 +1,13 @@
+{
+  "network": "Sonic Testnet",
+  "chainId": 14601,
+  "deployer": "0x3b188255700eb8fcf4bc8F604441AB3bb4a30163",
+  "timestamp": "2025-09-07T06:28:15.535Z",
+  "contracts": {
+    "SToken": "0x4A80C79Ba53e1ecD18c3f340d8C5181e618B559C",
+    "KnowledgeDAO": "0xD59Da846F02A6C84D79C05F80CFB3B7ae2F21879",
+    "ReputationSystem": "0x97a2c3CA5a565F0C0c4Ee66968B382B542C01070",
+    "AIModelRegistry": "0x9CD763b9a34c43123a70e69168C447C3dB1d51b7"
+  },
+  "gasUsed": "Estimated deployment cost: ~0.1 S"
+} 

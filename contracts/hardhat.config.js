@@ -12,17 +12,13 @@ const SONIC_TESTNET_RPC_URL = process.env.SONIC_TESTNET_RPC_URL || "https://rpc.
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "";
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || "";
 
-/** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
     solidity: {
-        version: "0.8.19",
+        version: "0.8.20",
         settings: {
             optimizer: {
                 enabled: true,
                 runs: 200,
-                details: {
-                    yul: false,
-                },
             },
             viaIR: true,
         },
@@ -30,15 +26,6 @@ module.exports = {
     networks: {
         hardhat: {
             chainId: 31337,
-            forking: {
-                url: SONIC_RPC_URL,
-                enabled: false,
-            },
-            accounts: {
-                mnemonic: "test test test test test test test test test test test junk",
-                count: 20,
-                accountsBalance: "10000000000000000000000", // 10,000 ETH
-            },
         },
         localhost: {
             url: "http://127.0.0.1:8545",
@@ -47,16 +34,16 @@ module.exports = {
         sonic: {
             url: SONIC_RPC_URL,
             accounts: [PRIVATE_KEY],
-            chainId: 146, // Sonic mainnet chain ID
+            chainId: 146, // ✅ FIXED: Correct Sonic mainnet chain ID
             gasPrice: "auto",
-            timeout: 60000,
+            timeout: 120000,
         },
         sonicTestnet: {
             url: SONIC_TESTNET_RPC_URL,
             accounts: [PRIVATE_KEY],
-            chainId: 57054, // Sonic testnet chain ID  
+            chainId: 14601, // ✅ FIXED: Correct Sonic testnet chain ID  
             gasPrice: "auto",
-            timeout: 60000,
+            timeout: 120000,
         },
     },
     etherscan: {
@@ -74,41 +61,29 @@ module.exports = {
             },
             {
                 network: "sonicTestnet",
-                chainId: 57054,
+                chainId: 14601,
                 urls: {
-                    apiURL: "https://api.testnet.sonicscan.org/api",
-                    browserURL: "https://testnet.sonicscan.org",
+                    apiURL: "https://api.testnet.soniclabs.com/api",
+                    browserURL: "https://testnet.soniclabs.com",
                 },
             },
         ],
-    },
-    sourcify: {
-        enabled: true,
     },
     gasReporter: {
         enabled: process.env.REPORT_GAS === "true",
         currency: "USD",
         gasPrice: 20,
         coinmarketcap: COINMARKETCAP_API_KEY,
-        showTimeSpent: true,
-        showMethodSig: true,
     },
     contractSizer: {
         alphaSort: true,
         runOnCompile: true,
         disambiguatePaths: false,
     },
-    typechain: {
-        outDir: "typechain-types",
-        target: "ethers-v6",
-    },
     paths: {
         sources: "./contracts",
         tests: "./test",
         cache: "./cache",
         artifacts: "./artifacts",
-    },
-    mocha: {
-        timeout: 300000, // 5 minutes
     },
 };
