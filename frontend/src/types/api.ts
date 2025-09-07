@@ -10,8 +10,47 @@ export interface APIResponse<T = any> {
   };
 }
 
-// Backend AI Analysis Response (theo /api/ai/analyze)
+// Updated AI Analysis Response - khớp với dữ liệu thực tế
 export interface AIAnalysisResult {
+  nlp_analysis: {
+    social_sentiment: any;
+    news_sentiment: any;
+    technical_analysis: any;
+    confidence_score?: number;
+    status?: string;
+    processing_time?: string;
+    data_sources?: string[];
+  };
+  research_report: {
+    analysis: {
+      executive_summary: string;
+      key_findings: any;
+      market_sentiment: string;
+      risk_assessment: string;
+      price_targets: any;
+      confidence_score: number;
+    };
+    content_hash: string;
+    timestamp: string;
+    blockchain_verified: boolean;
+    ai_models_used: string[];
+  };
+  tokens_analyzed: string[];
+  timestamp: string;
+  overall_confidence: number;
+  market_signals: Array<{
+    token: string;
+    signal: string;
+    strength: number;
+    timeframe: string;
+    risk_reward: string;
+    stop_loss: number;
+    take_profit: number;
+  }>;
+}
+
+// Giữ nguyên legacy interface cho compatibility (nếu cần)
+export interface LegacyAIAnalysisResult {
   tokens: string[];
   analysis: {
     social_sentiment: any;

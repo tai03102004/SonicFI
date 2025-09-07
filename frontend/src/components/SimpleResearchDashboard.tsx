@@ -1,22 +1,8 @@
 import React, { useState } from 'react';
 import { useWallet } from '../hooks/useWallet';
 import { aiService } from '../services/api';
-interface AnalysisResult {
-  tokens: string[];
-  analysis: {
-    social_sentiment: any;
-    news_sentiment: any;
-    technical_analysis: any;
-    research_report: {
-      summary: string;
-      key_insights: string[];
-      recommendation: string;
-      confidence_level: string;
-    };
-    confidence_score: number;
-  };
-  timestamp: string;
-}
+import { AIAnalysisResult } from '@/types/api';
+
 
 interface PredictionResult {
   predictions: Array<{
@@ -33,7 +19,7 @@ const SimpleResearchDashboard: React.FC = () => {
   const { isConnected, address } = useWallet();
   const [selectedTokens, setSelectedTokens] = useState<string[]>(['BTC']);
   const [stakeAmount, setStakeAmount] = useState('100');
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<AIAnalysisResult | null>(null);
   const [predictionResult, setPredictionResult] = useState<PredictionResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [, setError] = useState<string | null>(null);
@@ -310,7 +296,7 @@ const SimpleResearchDashboard: React.FC = () => {
           
           {analysisResult ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {/* Confidence Score */}
+              {/* Overall Confidence Score */}
               <div>
                 <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#f9fafb' }}>
                   AI Confidence Score
@@ -324,7 +310,7 @@ const SimpleResearchDashboard: React.FC = () => {
                     overflow: 'hidden'
                   }}>
                     <div style={{
-                      width: `${(analysisResult.analysis.confidence_score || 0) * 100}%`,
+                      width: `${((analysisResult.overall_confidence || 0) * 100).toFixed(1)}%`,
                       height: '100%',
                       backgroundColor: '#10b981',
                       borderRadius: '8px'
@@ -335,51 +321,132 @@ const SimpleResearchDashboard: React.FC = () => {
                     fontWeight: 'bold',
                     color: '#10b981'
                   }}>
-                    {((analysisResult.analysis.confidence_score || 0) * 100).toFixed(1)}%
+                    {((analysisResult.overall_confidence || 0) * 100).toFixed(1)}%
                   </span>
                 </div>
               </div>
 
-              {/* Summary */}
+              {/* Executive Summary */}
               <div>
                 <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#f9fafb' }}>
                   Executive Summary
                 </h4>
                 <p style={{ fontSize: '14px', lineHeight: 1.5, color: '#d1d5db', margin: 0 }}>
-                  {analysisResult.analysis.research_report?.summary || 'Analysis completed. Check detailed insights below.'}
+                  {analysisResult.research_report?.analysis?.executive_summary || 'Analysis completed. Check detailed insights below.'}
                 </p>
               </div>
 
-              {/* Key Insights */}
-              {analysisResult.analysis.research_report?.key_insights && (
+              {/* Key Findings */}
+              {analysisResult.research_report?.analysis?.key_findings && (
                 <div>
                   <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#f9fafb' }}>
-                    Key Insights
+                    Key Findings
                   </h4>
-                  <ul style={{ fontSize: '14px', lineHeight: 1.5, color: '#d1d5db', paddingLeft: '20px', margin: 0 }}>
-                    {analysisResult.analysis.research_report.key_insights.map((insight, index) => (
-                      <li key={index} style={{ marginBottom: '5px' }}>{insight}</li>
+                  <div style={{ fontSize: '14px', lineHeight: 1.5, color: '#d1d5db' }}>
+                    {Object.entries(analysisResult.research_report.analysis.key_findings).map(([token, finding]) => (
+                      <div key={token} style={{ marginBottom: '8px' }}>
+                        <strong style={{ color: '#3b82f6' }}>{token}:</strong> {String(finding)}
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               )}
 
-              {/* Recommendation */}
-              <div>
-                <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#f9fafb' }}>
-                  AI Recommendation
-                </h4>
-                <div style={{
-                  padding: '12px',
-                  borderRadius: '6px',
-                  backgroundColor: '#065f46',
-                  border: '1px solid #10b981'
-                }}>
-                  <p style={{ fontSize: '14px', color: '#34d399', margin: 0, fontWeight: '500' }}>
-                    {analysisResult.analysis.research_report?.recommendation || 'Monitor market conditions closely'}
-                  </p>
+              {/* Market Sentiment & Risk Assessment */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+                <div>
+                  <h4 style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '8px', color: '#f9fafb' }}>
+                    Market Sentiment
+                  </h4>
+                  <div style={{
+                    padding: '8px 12px',
+                    borderRadius: '4px',
+                    backgroundColor: '#374151',
+                    color: '#e5e7eb',
+                    fontSize: '12px'
+                  }}>
+                    {analysisResult.research_report?.analysis?.market_sentiment || 'N/A'}
+                  </div>
+                </div>
+                <div>
+                  <h4 style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '8px', color: '#f9fafb' }}>
+                    Risk Assessment
+                  </h4>
+                  <div style={{
+                    padding: '8px 12px',
+                    borderRadius: '4px',
+                    backgroundColor: '#374151',
+                    color: '#e5e7eb',
+                    fontSize: '12px'
+                  }}>
+                    {analysisResult.research_report?.analysis?.risk_assessment || 'N/A'}
+                  </div>
                 </div>
               </div>
+
+              {/* Market Signals */}
+              {analysisResult.market_signals && analysisResult.market_signals.length > 0 && (
+                <div>
+                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#f9fafb' }}>
+                    Market Signals
+                  </h4>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {analysisResult.market_signals.map((signal: { signal: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; token: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; strength: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; timeframe: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; risk_reward: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; }, index: React.Key | null | undefined) => (
+                      <div key={index} style={{
+                        padding: '12px',
+                        borderRadius: '6px',
+                        backgroundColor: signal.signal === 'BUY' ? '#065f46' : '#7f1d1d',
+                        border: `1px solid ${signal.signal === 'BUY' ? '#10b981' : '#ef4444'}`
+                      }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                          <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#e5e7eb' }}>
+                            {signal.token} - {signal.signal}
+                          </span>
+                          <span style={{
+                            fontSize: '12px',
+                            fontWeight: 'bold',
+                            color: signal.signal === 'BUY' ? '#34d399' : '#fca5a5'
+                          }}>
+                            {signal.strength}% Strength
+                          </span>
+                        </div>
+                        <div style={{ fontSize: '12px', color: '#9ca3af' }}>
+                          Timeframe: {signal.timeframe} | Risk/Reward: {signal.risk_reward}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Technical Analysis Summary */}
+              {analysisResult.nlp_analysis?.technical_analysis && (
+                <div>
+                  <h4 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '10px', color: '#f9fafb' }}>
+                    Technical Analysis
+                  </h4>
+                  {Object.entries(analysisResult.nlp_analysis.technical_analysis).map(([token, data]: [string, any]) => (
+                    <div key={token} style={{
+                      padding: '12px',
+                      borderRadius: '6px',
+                      backgroundColor: '#111827',
+                      border: '1px solid #374151',
+                      marginBottom: '8px'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                        <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#3b82f6' }}>{token}</span>
+                        <span style={{ fontSize: '12px', color: '#10b981' }}>
+                          ${data.current_price?.toFixed(2)}
+                        </span>
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '12px', color: '#9ca3af' }}>
+                        <div>RSI: {data.rsi?.toFixed(1)}</div>
+                        <div>Trend: {data.trend}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Prediction Results */}
               {predictionResult && (
